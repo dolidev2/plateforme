@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} PromoPub-Integral |
+{#    {{ service }}#}
+{% endblock %}
+
+{% block link %}
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+{% endblock %}
+{% block content %}
+
+    <div style="margin-left: 40%;">
+       <button type="button" class="btn btn-primary btn-rounded btn-fw">{{ service }} | {{ dossier.nomDossier }}</button>
+    </div>
+    
+    <br>
+    <br>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Détail {{ dossier.nomDossier }}
+                    {% if dossier.statut == '0' %}
+
+                        <button style="margin-left: 27%;" class="btn btn-warning">En cours</button>
+                    {% elseif dossier.statut == '1' %}
+
+                        <button style="margin-left: 27%;" class="btn btn-success">Terminé</button>
+                    {% endif %}
+                </h4>
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                           <th>Propriété</th>
+                           <th>Valeur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>type</td>
+                            <td>{{ dossier.type }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nom du client</td>
+                            <td>{{ dossier.client}}</td>
+                        </tr>
+                        {% for devi in devis  %}
+                        <tr>
+                            <td>Fournisseur</td>
+                            <td>{{ devi.nomFournisseur }}</td>
+                        </tr>
+                        <tr>
+                            <td>Devis</td>
+                            <td>
+                                <a href="{{ path('app_devis_fournisseur',{name:devi.nomDevis}) }}" target="_blank">
+                                    <button class="btn btn-primary">devis</button>
+                                </a>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>Montant TTC devis</td>
+
+                            {% if dossier.cout is empty  %}
+                                <td><input type="text" id="devis"  class="form-control"></td>
+                            {% else %}
+                                <td><input type="text" id="devis"  class="form-control" value="{{ dossier.cout }}"></td>
+                            {% endif %}
+                            <input type="hidden" id="dossier" value="{{ dossier.id }}">
+                        </tr>
+                        <tr>
+                            <td>Prix de vente</td>
+                            {% if dossier.vente is empty  %}
+                                <td><input type="text" id="vente"  class="form-control"></td>
+                            {% else %}
+                                <td><input type="text" id="vente"  class="form-control" value="{{ dossier.vente }}"></td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Marge</td>
+                            {% if (dossier.vente is empty)  and  (dossier.cout is empty)%}
+                                <td><input type="text" id="marge" readonly value="" class="form-control"></td>
+                            {% else %}
+                                {% set marge = dossier.vente - dossier.cout %}
+                                <td><input type="text" id="marge" readonly value="{{ marge }}" class="form-control"></td>
+                            {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <button style="margin-left: 40%;"  id="cloturer" class="btn btn-primary">Clôturer {{ dossier.nomDossier }}</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('#vente').on('keyup', function () {
+
+             var vente = parseInt( $('#vente').val());
+             var devis = parseInt( $('#devis').val());
+             $('#marge').val(vente - devis);
+            });
+
+            $('#cloturer').on('click', function () {
+
+                var vente = JSON.parse(JSON.stringify(parseInt( $('#vente').val())));
+                var devis = JSON.parse(JSON.stringify(parseInt( $('#devis').val())));
+                var dossier = JSON.parse(JSON.stringify(parseInt( $('#dossier').val())));
+
+
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "{{ path('app_service_dossier',{service:service,dossier:dossier.id}) }}",
+                        data:
+                            {   vente : vente,
+                                devis : devis,
+                                dossier: dossier,
+                            },
+                        success:function (html) {
+                            alert("Information ajouté avec succès");
+                           // console.log(html);
+                        },
+                        fail: function (html) {
+                            alert("Information non ajouté");
+                        }
+                    }
+                );
+
+
+            });
+
+        });
+
+    </script>
+{% endblock %}

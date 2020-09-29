@@ -1,12 +1,74 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}PromoPub-Integral {% endblock %}</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="{{ asset('vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/base/vendor.bundle.base.css') }}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ asset('css/horizontal-layout-light/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{{ asset('images/Logo-Promo-Pub2.png') }}" />
+    {% block link %}  {% endblock %}
+</head>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_horizontal-navbar.html -->
+    <div class="horizontal-menu">
+   {% include "partials/_horizental-navbar.html.twig" %}
+   {% include "partials/_navbar.html.twig" %}
+    </div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                     {% block content %}{% endblock  %}
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+          {% include "partials/_footer.html.twig" %}
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<!-- base:js -->
+
+<script src="{{ asset('vendors/base/vendor.bundle.base.js') }}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="{{ asset('vendors/progressbar.js/progressbar.min.js') }}"></script>
+<script src="{{ asset('vendors/flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('vendors/flot/jquery.flot.resize.js') }}"></script>
+<script src="{{ asset('vendors/flot/curvedLines.js') }}"></script>
+<script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{{ asset('js/off-canvas.js') }}"></script>
+<script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+<script src="{{ asset('js/template.js') }}"></script>
+<script src="{{ asset('js/settings.js') }}"></script>
+<script src="{{ asset('js/todolist.js') }}"></script>
+<script src="{{ asset('js/file-upload.js') }}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{{ asset('js/dashboard.js') }}"></script>
+<!-- End custom js for this page-->
+{% block script %} {% endblock %}
+</body>
+
 </html>

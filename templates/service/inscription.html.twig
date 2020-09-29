@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription | PromoPub-Integral{% endblock %}
+
+{% block content %}
+
+        <div class="main-panel">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-6 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                            <div class="brand-logo" style="text-align: center;">
+                                <img src="{{ asset('images/Logo-Promo-Pub2.png') }}" alt="logo">
+                                <img src="{{ asset('images/Logo-Integral2.png') }}" alt="logo">
+                            </div>
+                            <h6 class="font-weight-light">Ajouter un utilisateur en quelques étapes</h6>
+                                {{ form_start(form) }}
+                                <div class="form-group">
+                                    {{ form_row(form.nom) }}
+                                </div>
+                                <div class="form-group">
+                                    {{form_row(form.prenom) }}
+                                </div>
+                                <div class="form-group">
+                                    {{form_row(form.username) }}
+                                </div>
+                                <div class="form-group">
+                                    {{form_row(form.password) }}
+                                </div>
+                                <div class="form-group">
+                                    {{form_row(form.service) }}
+                                </div>
+                                <div class="form-group">
+                                    {{form_row(form.role) }}
+                                </div>
+
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Ajouter</button>
+                                </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

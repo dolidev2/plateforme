@@ -1,0 +1,234 @@
+<nav class="bottom-navbar">
+    <div class="container">
+        <ul class="nav page-navigation">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('home') }}">
+                    <i class="mdi mdi-shield-check menu-icon"></i>
+                    <span class="menu-title">Accueil</span>
+                </a>
+            </li>
+            {% if  app.session.get('idService') == '6' %}
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 6}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Direction</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[5]['dossier_1'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[5]['id']}) }}">{{ app.session.get('dossier')[5]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[5]['dossier_2'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[5]['id']}) }}">{{ app.session.get('dossier')[5]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 2}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Marketing</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[1]['dossier_1']  is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[1]['id']}) }}">{{ app.session.get('dossier')[1]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[1]['dossier_2']  is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[1]['id']}) }}">{{ app.session.get('dossier')[1]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 4}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Commercial</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[3]['dossier_1'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[3]['id']}) }}">{{ app.session.get('dossier')[3]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[3]['dossier_2']  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[3]['id']}) }}">{{ app.session.get('dossier')[3]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 7}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Comptabilité</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[6]['dossier_1'] is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[6]['id']}) }}">{{ app.session.get('dossier')[6]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[6]['dossier_2'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[6]['id']}) }}">{{ app.session.get('dossier')[6]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 5}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Pao</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[4]['dossier_1'] is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[4]['id']}) }}">{{ app.session.get('dossier')[4]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[4]['dossier_2'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[4]['id']}) }}">{{ app.session.get('dossier')[4]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 1}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Informatique</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[0]['dossier_1'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[0]['id']}) }}">{{ app.session.get('dossier')[0]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[0]['dossier_2'] is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[0]['id']}) }}">{{ app.session.get('dossier')[0]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 3}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Technique</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[2]['dossier_1'] is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[2]['id']}) }}">{{ app.session.get('dossier')[2]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[2]['dossier_2'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[2]['id']}) }}">{{ app.session.get('dossier')[2]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
+            {% if app.session.get('idService') == '3' %}
+                <li class="nav-item">
+                    <a href="{{ path('app_service',{id: 3}) }}" class="nav-link">
+                        <i class="mdi mdi-view-headline menu-icon"></i>
+                        <span class="menu-title">Technique</span>
+                        <i class="menu-arrow"></i></a>
+                    <div class="submenu">
+                        <ul class="submenu-item">
+                            {% if app.session.get('dossier')[2]['dossier_1'] is defined  %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[2]['id']}) }}">{{ app.session.get('dossier')[2]['dossier_1'] }}</a></li>
+                            {% endif %}
+                            {% if app.session.get('dossier')[2]['dossier_2'] is defined  %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[2]['id']}) }}">{{ app.session.get('dossier')[2]['dossier_2'] }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+            {% if app.session.get('idService') == '1'  %}
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 1}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Informatique</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[0]['dossier_1'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[0]['id']}) }}">{{ app.session.get('dossier')[0]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[0]['dossier_2'] is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[0]['id']}) }}">{{ app.session.get('dossier')[0]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
+            {% if app.session.get('idService') == '5'  %}
+                <li class="nav-item">
+                    <a href="{{ path('app_service',{id: 5}) }}" class="nav-link">
+                        <i class="mdi mdi-view-headline menu-icon"></i>
+                        <span class="menu-title">Pao</span>
+                        <i class="menu-arrow"></i></a>
+                    <div class="submenu">
+                        <ul class="submenu-item">
+                            {% if app.session.get('dossier')[4]['dossier_1'] is defined %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[4]['id']}) }}">{{ app.session.get('dossier')[4]['dossier_1'] }}</a></li>
+                            {% endif %}
+                            {% if app.session.get('dossier')[4]['dossier_2'] is defined  %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[4]['id']}) }}">{{ app.session.get('dossier')[4]['dossier_2'] }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+            {% if app.session.get('idService') == '7'  %}
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 7}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Comptabilité</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[6]['dossier_1'] is defined %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[6]['id']}) }}">{{ app.session.get('dossier')[6]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[6]['dossier_2'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[6]['id']}) }}">{{ app.session.get('dossier')[6]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
+            {% if app.session.get('idService') == '4'  %}
+            <li class="nav-item">
+                <a href="{{ path('app_service',{id: 4}) }}" class="nav-link">
+                    <i class="mdi mdi-view-headline menu-icon"></i>
+                    <span class="menu-title">Commercial</span>
+                    <i class="menu-arrow"></i></a>
+                <div class="submenu">
+                    <ul class="submenu-item">
+                        {% if app.session.get('dossier')[3]['dossier_1'] is defined  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[3]['id']}) }}">{{ app.session.get('dossier')[3]['dossier_1'] }}</a></li>
+                        {% endif %}
+                        {% if app.session.get('dossier')[3]['dossier_2']  %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[3]['id']}) }}">{{ app.session.get('dossier')[3]['dossier_2'] }}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
+            {% if app.session.get('idService') == '2'  %}
+                <li class="nav-item">
+                    <a href="{{ path('app_service',{id: 2}) }}" class="nav-link">
+                        <i class="mdi mdi-view-headline menu-icon"></i>
+                        <span class="menu-title">Marketing</span>
+                        <i class="menu-arrow"></i></a>
+                    <div class="submenu">
+                        <ul class="submenu-item">
+                            {% if app.session.get('dossier')[1]['dossier_1']  is defined %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[1]['id']}) }}">{{ app.session.get('dossier')[1]['dossier_1'] }}</a></li>
+                            {% endif %}
+                            {% if app.session.get('dossier')[1]['dossier_2']  is defined %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[1]['id']}) }}">{{ app.session.get('dossier')[1]['dossier_2'] }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

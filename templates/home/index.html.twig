@@ -1,0 +1,472 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil | PromoPub-Integral{% endblock %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Programme</h4>
+                <p class="card-description">Dossier en instance</p>
+                <div class="mt-5">
+                    <div class="timeline">
+                        {% if dossier[5].id == 6 %}
+                            {% if dossier[5].total == 2  %}
+                                <div class="timeline-wrapper timeline-wrapper-warning">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[5].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[5].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-wrapper-warning">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[5].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[5].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[5].total == 1  %}
+                                <div class="timeline-wrapper timeline-wrapper-warning">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[5].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[5].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[5].total == 0  %}
+                                <div class="timeline-wrapper timeline-wrapper-warning">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[5].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {# INFORMATIQUE #}
+                        {% if dossier[0].id == 1 %}
+                            {% if dossier[0].total == 2  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-danger">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[0].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[0].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-danger">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[0].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[0].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[0].total == 1  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-warning">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[0].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[0].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[0].total == 0  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-warning">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[0].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {# TECHNIQUE #}
+                        {% if dossier[2].id == 3 %}
+                            {% if dossier[2].total == 2  %}
+                                <div class="timeline-wrapper timeline-wrapper-success">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[2].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[2].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-wrapper-success">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[2].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[2].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[2].total == 1  %}
+                                <div class="timeline-wrapper timeline-wrapper-success">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[2].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[2].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[2].total == 0  %}
+                                <div class="timeline-wrapper timeline-wrapper-success">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[2].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {# MARKETING #}
+                        {% if dossier[1].id == 2 %}
+                            {% if dossier[1].total == 2  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-info">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[1].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[1].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-info">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[1].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[1].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[1].total == 1  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-info">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[1].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[1].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[1].total == 0  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-info">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[1].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {# COMMERCIAL #}
+                        {% if dossier[3].id == 4 %}
+                            {% if dossier[3].total == 2  %}
+                                <div class="timeline-wrapper timeline-wrapper-primary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[3].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[3].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-wrapper-primary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[3].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[3].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[3].total == 1  %}
+                                <div class="timeline-wrapper timeline-wrapper-primary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[3].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[3].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[3].total == 0  %}
+                                <div class="timeline-wrapper timeline-wrapper-primary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[3].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {# PAO #}
+                        {% if dossier[4].id == 5 %}
+                            {% if dossier[4].total == 2  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-secondary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[4].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[4].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-secondary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[4].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[4].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[4].total == 1  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-secondary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[4].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[4].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[4].total == 0  %}
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-secondary">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[4].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {# COMPTABILITE #}
+                        {% if dossier[6].id == 7 %}
+                            {% if dossier[6].total == 2  %}
+                                <div class="timeline-wrapper timeline-wrapper-dark">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[6].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[6].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-wrapper timeline-wrapper-dark">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }}</h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> {{ dossier[6].dossier_2 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[6].date_2|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[6].total == 1  %}
+                                <div class="timeline-wrapper timeline-wrapper-dark">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[6].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold">{{ dossier[6].date_1|date("d/m/Y") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if dossier[6].total == 0  %}
+                                <div class="timeline-wrapper timeline-wrapper-dark">
+                                    <div class="timeline-badge"></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>{{ dossier[6].dossier_1 }}</p>
+                                        </div>
+                                        <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                            <span class="ml-md-auto font-weight-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
