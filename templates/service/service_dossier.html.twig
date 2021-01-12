@@ -1,99 +1,232 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} PromoPub-Integral |
-{#    {{ service }}#}
+    {{ service }}
 {% endblock %}
 
 {% block link %}
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 {% endblock %}
 {% block content %}
-
     <div style="margin-left: 40%;">
-       <button type="button" class="btn btn-primary btn-rounded btn-fw">{{ service }} | {{ dossier.nomDossier }}</button>
+       <button type="button" class="btn btn-primary btn-rounded btn-fw mb-1">{{ service }} | {{ dossier.nomDossier }}</button>
     </div>
-    
-    <br>
     <br>
     <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Détail {{ dossier.nomDossier }}
-                    {% if dossier.statut == '0' %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="mt-4">
+                        <div class="accordion" id="accordion" role="tablist">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="heading-2">
+                                    <h6 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                            {{ dossier.nomDossier }}
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div id="collapse-2" class="collapse" role="tabpanel" aria-labelledby="heading-2" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Statut
+                                            {% if dossier.statut == '0' %}
+                                                <button style="margin-left: 27%;" class="btn btn-warning">En cours</button>
+                                            {% elseif dossier.statut == '1' %}
+                                                <button style="margin-left: 27%;" class="btn btn-success">Terminé</button>
+                                            {% endif %}
+                                        </h4>
+                                        <div>
+                                            <h4>Description</h4>
+                                            <p>{{ dossier.descript }}</p>
+                                        </div>
 
-                        <button style="margin-left: 27%;" class="btn btn-warning">En cours</button>
-                    {% elseif dossier.statut == '1' %}
-
-                        <button style="margin-left: 27%;" class="btn btn-success">Terminé</button>
-                    {% endif %}
-                </h4>
-                <div class="table-responsive pt-3">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                           <th>Propriété</th>
-                           <th>Valeur</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>type</td>
-                            <td>{{ dossier.type }}</td>
-                        </tr>
-                        <tr>
-                            <td>Nom du client</td>
-                            <td>{{ dossier.client}}</td>
-                        </tr>
-                        {% for devi in devis  %}
-                        <tr>
-                            <td>Fournisseur</td>
-                            <td>{{ devi.nomFournisseur }}</td>
-                        </tr>
-                        <tr>
-                            <td>Devis</td>
-                            <td>
-                                <a href="{{ path('app_devis_fournisseur',{name:devi.nomDevis}) }}" target="_blank">
-                                    <button class="btn btn-primary">devis</button>
-                                </a>
-
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        <tr>
-                            <td>Montant TTC devis</td>
-
-                            {% if dossier.cout is empty  %}
-                                <td><input type="text" id="devis"  class="form-control"></td>
-                            {% else %}
-                                <td><input type="text" id="devis"  class="form-control" value="{{ dossier.cout }}"></td>
-                            {% endif %}
-                            <input type="hidden" id="dossier" value="{{ dossier.id }}">
-                        </tr>
-                        <tr>
-                            <td>Prix de vente</td>
-                            {% if dossier.vente is empty  %}
-                                <td><input type="text" id="vente"  class="form-control"></td>
-                            {% else %}
-                                <td><input type="text" id="vente"  class="form-control" value="{{ dossier.vente }}"></td>
-                            {% endif %}
-                        </tr>
-                        <tr>
-                            <td>Marge</td>
-                            {% if (dossier.vente is empty)  and  (dossier.cout is empty)%}
-                                <td><input type="text" id="marge" readonly value="" class="form-control"></td>
-                            {% else %}
-                                {% set marge = dossier.vente - dossier.cout %}
-                                <td><input type="text" id="marge" readonly value="{{ marge }}" class="form-control"></td>
-                            {% endif %}
-                        </tr>
-                        </tbody>
-                    </table>
+                                        <br>
+                                        <button style="margin-left: 32.3%;"  id="cloturer" class="btn btn-primary">Clôturer</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" role="tab" id="heading-3">
+                                    <h6 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+                                            Ajouter un commentaire
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div id="collapse-3" class="collapse" role="tabpanel" aria-labelledby="heading-3" data-parent="#accordion">
+                                    <div class="card-body">
+                                        {{ form_start(form) }}
+                                        {{ form_row(form.content) }}
+                                        <button type="submit" class="btn btn-outline-primary">Ajouter</button>
+                                        <button type="reset" class="btn btn-outline-danger">Annuler</button>
+                                        {{ form_end(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <br>
-                <button style="margin-left: 40%;"  id="cloturer" class="btn btn-primary">Clôturer {{ dossier.nomDossier }}</button>
             </div>
         </div>
-    </div>
+    {% if comment is defined and comment is not null %}
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Commentaires</h4>
+                    <div class="mt-5">
+                        <div class="timeline">
+                          {% for cm in comment %}
+                              {% if cm.serviceId == 6 %}
+                                  <div class="timeline-wrapper timeline-wrapper-warning">
+                                      <div class="timeline-badge"></div>
+                                      <div class="timeline-panel">
+                                          <div class="timeline-heading">
+                                              <h6 class="timeline-title">{{ cm.prenom }} {{ cm.nom }}</h6>
+                                          </div>
+                                          <div class="timeline-body">
+                                              <p>{{ cm.content }}</p>
+                                          </div>
+                                          <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                              <i class="mdi mdi-heart-outline text-muted mr-1"></i>
+                                              <span>
+                                                    <a  href="#"><label class="badge badge-info"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Devis"></i></label></a>
+                                                    <a  href="#"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+                                              </span>
+                                              <span class="ml-md-auto font-weight-bold">{{ cm.commentDate | date("d/m/Y") }}</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                {% endif %}
+                                {% if cm.serviceId == 1 or cm.serviceId ==3 %}
+                                    <div class="timeline-wrapper timeline-inverted timeline-wrapper-danger">
+                                        <div class="timeline-badge"></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h6 class="timeline-title">{{ cm.prenom }} {{ cm.nom }}</h6>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>{{ cm.content }}</p>
+                                            </div>
+                                            <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                              <span>
+                                                    <a  data-toggle="modal" data-target="#comment{{ cm.contentId }}" data-whatever="@mdo"><i class="fa fa-edit text-muted mr-1"></i></a>
+                                                    <a  href="{{ path('app_comment_supprimer',{comment:cm.contentId}) }}"><i class="fa fa-trash-o text-muted "></i></a>
+                                              </span>
+                                                <span class="ml-md-auto font-weight-bold">{{ cm.commentDate | date("d/m/Y") }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if cm.serviceId == 2 %}
+                                  <div class="timeline-wrapper timeline-wrapper-info">
+                                      <div class="timeline-badge"></div>
+                                      <div class="timeline-panel">
+                                          <div class="timeline-heading">
+                                              <h6 class="timeline-title">{{ cm.prenom }} {{ cm.nom }}</h6>
+                                          </div>
+                                          <div class="timeline-body">
+                                              <p>{{ cm.content }}</p>
+                                          </div>
+                                          <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                              <i class="mdi mdi-heart-outline text-muted mr-1"></i>
+                                              <span>19</span>
+                                              <span class="ml-md-auto font-weight-bold">{{ cm.commentDate | date("d/m/Y") }}</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                {% endif %}
+                                {% if cm.serviceId == 4 %}
+                                  <div class="timeline-wrapper timeline-inverted timeline-wrapper-primary">
+                                      <div class="timeline-badge"></div>
+                                      <div class="timeline-panel">
+                                          <div class="timeline-heading">
+                                              <h6 class="timeline-title">{{ cm.prenom }} {{ cm.nom }}</h6>
+                                          </div>
+                                          <div class="timeline-body">
+                                              <p>{{ cm.content }}</p>
+                                          </div>
+                                          <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                              <i class="mdi mdi-heart-outline text-muted mr-1"></i>
+                                              <span>19</span>
+                                              <span class="ml-md-auto font-weight-bold">{{ cm.commentDate | date("d/m/Y") }}</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              {% endif %}
+                              {% if cm.serviceId == 5 %}
+                                  <div class="timeline-wrapper timeline-wrapper-success">
+                                      <div class="timeline-badge"></div>
+                                      <div class="timeline-panel">
+                                          <div class="timeline-heading">
+                                              <h6 class="timeline-title">{{ cm.prenom }} {{ cm.nom }}</h6>
+                                          </div>
+                                          <div class="timeline-body">
+                                              <p>{{ cm.content }}</p>
+                                          </div>
+                                          <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                              <i class="mdi mdi-heart-outline text-muted mr-1"></i>
+                                              <span>19</span>
+                                              <span class="ml-md-auto font-weight-bold">{{ cm.commentDate | date("d/m/Y") }}</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              {% endif %}
+                              {% if cm.serviceId == 7 %}
+                                  <div class="timeline-wrapper timeline-inverted timeline-wrapper-dark">
+                                      <div class="timeline-badge"></div>
+                                      <div class="timeline-panel">
+                                          <div class="timeline-heading">
+                                              <h6 class="timeline-title">{{ cm.prenom }} {{ cm.nom }}</h6>
+                                          </div>
+                                          <div class="timeline-body">
+                                              <p>{{ cm.content }}</p>
+                                          </div>
+                                          <div class="timeline-footer d-flex align-items-center flex-wrap">
+                                              <i class="mdi mdi-heart-outline text-muted mr-1"></i>
+                                              <span>19</span>
+                                              <span class="ml-md-auto font-weight-bold">{{ cm.commentDate | date("d/m/Y") }}</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              {% endif %}
+
+                                <div class="col-md-6 col-xl-4 grid-margin stretch-card">
+                                  <div class="card">
+                                    <div class="card-body">
+                                      <div class="modal fade" id="comment{{ cm.contentId }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="ModalLabel">Modifier son commentaire</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <form method="post" name="formComment">
+                                                <div class="form-group">
+                                                  <label for="message-text" class="col-form-label">Commentaire:</label>
+                                                  <input type="textarea" class="form-control" id="commentMessage" value="{{ cm.content }}">
+                                                  <input type="hidden" id="commentId" value="{{ cm.contentId }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-success" id="btn_modifier_comment">Modifier</button>
+                                                  <button type="button" class="btn btn-light" data-dismiss="modal">Annuler</button>
+                                                </div>
+                                             </form>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block script %}
@@ -128,6 +261,32 @@
                         },
                         fail: function (html) {
                             alert("Information non ajouté");
+                        }
+                    }
+                );
+            });
+
+        $('#btn_modifier_comment').on('click', function () {
+
+                var message = JSON.parse(JSON.stringify( $('#commentMessage').val()));
+                var id = JSON.parse(JSON.stringify(parseInt( $('#commentId').val())));
+
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "{{ path('app_service_dossier',{service:service,dossier:dossier.id}) }}",
+                        data:
+                            {   message : message,
+                                id : id,
+                            },
+                        success:function (html) {
+                           if(html == 'bon')
+                                window.location.href= "{{ path('app_service_dossier',{service:service,dossier:dossier.id}) }}";
+                           else
+                               alert("Vous n'êtes pas autoriser à modifier ce commentaire");
+                        },
+                        fail: function (html) {
+                            alert("Commentaire non modifié");
                         }
                     }
                 );

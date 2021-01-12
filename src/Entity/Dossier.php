@@ -159,9 +159,20 @@ class Dossier
      */
     private $client;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="dossier")
+     */
+    private $commentaires;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $descript;
+
     public function __construct()
     {
         $this->devis = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -304,6 +315,49 @@ class Dossier
     public function setClient(?string $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getDossier() === $this) {
+                $commentaire->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDescript(): ?string
+    {
+        return $this->descript;
+    }
+
+    public function setDescript(?string $descript): self
+    {
+        $this->descript = $descript;
 
         return $this;
     }

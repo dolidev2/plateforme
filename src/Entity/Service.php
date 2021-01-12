@@ -16,43 +16,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
- * @ApiResource(
- *     normalizationContext={
- *          "groups"={"service:read"}
- *  },
- *     denormalizationContext={
- *          "groups"={"service:write"},
- *  },
- *     collectionOperations={
- *        "get"={
- *          "path"= "/services",
- *          "controller"= ShowService::class
- *     },
- *       "post"={
- *          "path"= "/services",
- *          "controller"= CreateService::class
- *     },
- *     "service"={
- *          "method"="GET",
- *          "path"="/services/service/{service}",
- *          "controller"= ShowOneServiceByName::class
- *     },
- *     },
- *     itemOperations={
- *      "get"={
- *          "path"= "/services/{id}",
- *          "controller"= ShowOneService::class
- *       },
- *     "put"={
- *          "path"= "/services/{id}",
- *          "controller"= UpdateService::class
- *       },
- *     "delete"={
- *          "path"= "/services/{id}",
- *          "controller"= DeleteService::class
- *       },
- *}
- * )
  */
 class Service
 {
@@ -60,39 +23,32 @@ class Service
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"service:read"})
-     * @Groups("user:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"service:read","service:write"})
-     * @Groups("user:read")
      */
     private $nomService;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"service:read","service:write"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"service:read","service:write"})
+
      */
     private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Dossier::class, mappedBy="service", cascade={"persist"})
-     * @Groups({"service:read","service:write"})
      */
     private $dossiers;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="service")
-     * @Groups({"service:read","service:write"})
      */
     private $users;
 

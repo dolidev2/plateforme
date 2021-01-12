@@ -3,6 +3,7 @@
 {% block title %}Accueil | PromoPub-Integral{% endblock %}
 
 {% block content %}
+    
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -16,10 +17,14 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[5].id}) }}">
+                                                <h6 class="timeline-title">{{ dossier[5].service }} </h6>
+                                            </a>
                                         </div>
                                         <div class="timeline-body">
-                                            <p>{{ dossier[5].dossier_1 }}</p>
+                                            <a href="{{ path('app_service_dossier',{service:dossier[5].id ,dossier:dossier[5].dossier_1_id }) }}">
+                                                <p> {{ dossier[5].dossier_1 }}</p>
+                                            </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[5].date_1|date("d/m/Y") }}</span>
@@ -30,10 +35,14 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[5].id}) }}">
+                                                <h6 class="timeline-title">{{ dossier[5].service }} </h6>
+                                            </a>
                                         </div>
                                         <div class="timeline-body">
-                                            <p> {{ dossier[5].dossier_2 }}</p>
+                                            <a href="{{ path('app_service_dossier',{service:dossier[5].id ,dossier:dossier[5].dossier_2_id }) }}">
+                                               <p> {{ dossier[5].dossier_2 }}</p>
+                                            </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[5].date_2|date("d/m/Y") }}</span>
@@ -46,10 +55,14 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[5].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[5].id}) }}">
+                                                <h6 class="timeline-title">{{ dossier[5].service }} </h6>
+                                            </a>
                                         </div>
                                         <div class="timeline-body">
-                                            <p>{{ dossier[5].dossier_1 }}</p>
+                                            <a href="{{ path('app_service_dossier',{service:dossier[5].id ,dossier:dossier[5].dossier_1_id }) }}">
+                                                <p>  {{ dossier[5].dossier_1 }} </p>
+                                            </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[5].date_1|date("d/m/Y") }}</span>
@@ -74,6 +87,8 @@
                                 </div>
                             {% endif %}
                         {% endif %}
+
+
                         {# INFORMATIQUE #}
                         {% if dossier[0].id == 1 %}
                             {% if dossier[0].total == 2  %}
@@ -123,7 +138,7 @@
                                 </div>
                             {% endif %}
                             {% if dossier[0].total == 0  %}
-                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-warning">
+                                <div class="timeline-wrapper timeline-inverted timeline-wrapper-danger">
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">

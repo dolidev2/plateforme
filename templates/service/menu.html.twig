@@ -1,0 +1,14 @@
+  
+    <div class="row" style="margin-left: 30%; margin-top: 10px; margin-bottom: 10px;">
+        <div class="col-md-3 col-lg-4 col-sm-6" style=" margin-bottom: 5px;">
+            <a href="{{ path('app_service_add_dossier',{service:service.id}) }}"><button type="button" class="btn btn-success btn-rounded btn-fw">Ajouter</button></a>
+        </div>
+
+        <div class="col-md-3 col-lg-4 col-sm-6" style=" margin-bottom: 5px;">
+            <a href="{{ path('app_service_cloturer_dossier',{service:service.id}) }}"><button type="button" class="btn btn-warning btn-rounded btn-fw">Clôturer</button></a>
+        </div>
+
+        <div class="col-md-3 col-lg-4 col-sm-6">
+            <a href="{{ path('app_service_historique_dossier',{service:service.id}) }}"><button type="button" class="btn btn-info btn-rounded btn-fw">Historique</button></a>
+        </div>
+    </div>

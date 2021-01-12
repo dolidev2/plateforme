@@ -18,48 +18,6 @@ use App\Controller\Api\User\PasswordResetUser;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource(
- *     normalizationContext={
- *      "groups"={"user:read"}
- *     },
- *     denormalizationContext={
- *       "groups"={"user:write"}
- *     },
- *     collectionOperations={
- *      "get"={
- *          "path"= "/users",
- *          "controller"= ShowUser::class
- *     },
- *      "post"={
- *          "path"= "/users",
- *          "controller"= CreateUser::class
- *     },
- *      "login"={
- *          "method"="POST",
- *          "path"= "/users/login",
- *          "controller"= LoginUser::class
- *     },
- *        "Passwordreset"={
- *          "method"="POST",
- *          "path"= "/users/password",
- *          "controller"= PasswordResetUser::class
- *     }
- *     },
- *     itemOperations={
- *      "get"={
- *          "path"= "/users/{id}",
- *          "controller"= ShowOneUser::class
- *     },
- *      "put"={
- *          "path"= "/users/{id}",
- *          "controller"= UpdateUser::class
- *     },
- *      "delete"={
- *          "path"= "/users/{id}",
- *          "controller"= DeleteUser::class
- *     }
- *     }
- * )
  */
 class User implements UserInterface
 {
@@ -67,63 +25,58 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("user:read")
-     * @Groups("user:write")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups("user:read")
-     * @Groups("user:write")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups("user:read")
-     * @Groups("user:write")
+
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups("user:read")
-     * @Groups("user:write")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups("user:read")
-     * @Groups("user:write")
      */
     private $password;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("user:read")
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("user:read")
-     * @Groups("user:write")
      */
     private $updatedAt;
-
-    /**
-     * @ORM\Column(type="string", length=70)
-     * @Groups({"user:read","user:write"})
-     */
-    private $role;
-
     /**
      * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="users")
-     * @Groups({"user:read","user:write"})
      */
     private $service;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+     */
+    private $commentaires;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $roles = [];
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -202,9 +155,11 @@ class User implements UserInterface
 
         return $this;
     }
-    public function getRoles()
+    public function getRoles():array
     {
-        return ['role'=>''];
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
     public function getSalt()
     {
@@ -216,14 +171,11 @@ class User implements UserInterface
         return null;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
+   
 
-    public function setRole(string $role): self
+    public function setRoles(array $role): self
     {
-        $this->role = $role;
+        $this->roles = $role;
 
         return $this;
     }
@@ -236,6 +188,37 @@ class User implements UserInterface
     public function setService(?Service $service): self
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
+            }
+        }
 
         return $this;
     }

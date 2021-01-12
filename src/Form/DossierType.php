@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +28,13 @@ class DossierType extends AbstractType
                     'Interne' => 'Interne',
                     'Externe' => 'Externe'
                 ]
+            ]) 
+            ->add('descript',TextAreaType::class,[
+                'label' =>"Description du dossier",
+                'attr'=>[
+                    'class'=>'form-control'
+                ],
+                'required'=>false,
             ])
             ->add('client',TextType::class,[
                 'attr'=>[
@@ -34,21 +42,20 @@ class DossierType extends AbstractType
                 ],
                 'required'=>false
             ])
-            ->add('cout',NumberType::class,[
-                'attr'=>[
-                    'placeholder'=>"Montant total"
-                ],
-                'required'=>false,
-                'label'=>'Montant TTC devis'
-            ])
-            ->add('vente',TextType::class,[
-                'attr'=>[
-                    'placeholder'=>"Prix de vente"
-                ],
-                'required'=>false,
-                'label'=>'Prix de vente'
-
-            ])
+            // ->add('cout',NumberType::class,[
+            //     'attr'=>[
+            //         'placeholder'=>"Montant total"
+            //     ],
+            //     'required'=>false,
+            //     'label'=>'Montant TTC devis'
+            // ])
+            // ->add('vente',TextType::class,[
+            //     'attr'=>[
+            //         'placeholder'=>"Prix de vente"
+            //     ],
+            //     'required'=>false,
+            //     'label'=>'Prix de vente'
+            // ])
 
         ;
     }

@@ -3,16 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Commentaire;
 use App\Entity\Devis;
 use App\Entity\Dossier;
 use App\Entity\Fournisseur;
+use App\Entity\Service;
+use App\Form\CommentaireType;
 use App\Form\DevisType;
 use App\Form\DossierType;
 use App\Form\FournisseurType;
+use App\Repository\CommentaireRepository;
 use App\Repository\DevisRepository;
 use App\Repository\DossierRepository;
 use App\Repository\FournisseurRepository;
 use App\Repository\ServiceRepository;
+use App\Repository\UserRepository;
+use App\Service\DossierService;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -22,31 +28,61 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
+use Symfony\Component\String\Slugger\SluggerInterface;
+/**
+ * @Route("/service", name="app_")
+ */
 class ServiceController extends AbstractController
 {
 
     const DEVIS_DIRECTORY = "upload/devis";
-    /**
-     * @Route("/Service/Details/{id}", name="app_service")
-     */
-    public function service($id, ServiceRepository $serviceRepository, DossierRepository $dossierRepository)
+    
+    private $dossierRepository;
+    private $dossierService;
+    private $userRepository;
+    private $em;
+
+    public  function __construct( DossierRepository $dossierRepository,UserRepository $userRepository,
+                                  EntityManagerInterface $em,DossierService $dossierService)
     {
-        //Get all from service and dossier
-        $service = $serviceRepository->findOneById($id);
-        $dossierService = $dossierRepository->findDossierService($id);
+        $this->dossierRepository = $dossierRepository;
+        $this->userRepository = $userRepository;
+        $this->dossierService = $dossierService;
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/accueil", name="home")
+     */
+    public function index(ServiceRepository $serviceRepository,DossierRepository $dossierRepository)
+    {
+        $dossier = $this->dossierService->bilanDossier();
+
+        return $this->render('home/index.html.twig', [
+            'dossier' => $dossier,
+        ]);
+    }
+
+    
+    /**
+     * @Route("/Details/{id}", name="service")
+     */
+    public function service(Service $id, ServiceRepository $serviceRepository, DossierRepository $dossierRepository)
+    {
+
+        $dossierService = $dossierRepository->findDossierService($id->getId());
 
         return $this->render('service/service.html.twig',[
             'dossier' =>$dossierService,
-            'service' => $service,
+            'service' => $id,
         ]);
     }
 
     /**
-     * @Route("/Service/{service}/{dossier}/Details", name="app_service_dossier")
+     * @Route("/{service}/{dossier}/Details", name="service_dossier")
      */
-    public function service_dossier($dossier,$service, Request $request,DossierRepository $dossierRepository,DevisRepository $devisRepository,FournisseurRepository $fournisseurRepository,EntityManagerInterface $em)
+    public function service_dossier($dossier,$service,CommentaireRepository $commentaireRepository,Request $request,EntityManagerInterface $em)
     {
         /**
          * if data send with ajax
@@ -54,35 +90,79 @@ class ServiceController extends AbstractController
         if($request->isXmlHttpRequest()){
 
             //Get vente, cout and dossierId for each dossier posted
-            $vente = $request->request->get('vente');
-            $cout = $request->request->get('devis');
+
             $dossierId = $request->request->get('dossier');
+            if ( isset($dossierId) && !empty($dossierId) ){
+                //Get dossier to close
+                $dosier = $this->dossierRepository->findOneById($dossierId);
+                //Set statut
+                $dosier->setStatut(1);
+                //Persist and save
+                $em->persist($dosier);
+                $em->flush();
 
-            //Get dossier to close
-            $dosier = $dossierRepository->find($dossierId);
-            //Set statut
-            $dosier->setStatut(1);
-            //Persist and save
-            $em->persist($dosier);
-            $em->flush();
+                return new \Symfony\Component\HttpFoundation\JsonResponse($dosier);
+            }
+            $commentId = $request->request->get('id');
 
-            return new \Symfony\Component\HttpFoundation\JsonResponse($dosier);
+            if(isset($commentId) && !empty($commentId)){
+
+                $user = $request->getSession()->get('user');
+                $us = $this->userRepository->findOneById($user->getId());
+
+                $commentMessage = $request->request->get('message');
+                $commentObjet = $commentaireRepository->findOneById($commentId);
+
+                if($us->getId() == $commentObjet->getUser()->getId()){
+
+                    $commentObjet->setContent($commentMessage);
+                    $commentObjet->setUpdatedAt(new \DateTimeImmutable());
+
+                    $em->persist($commentObjet);
+                    $em->flush();
+                    return new \Symfony\Component\HttpFoundation\JsonResponse('bon');;
+                }else{
+                    return new \Symfony\Component\HttpFoundation\JsonResponse('mauvais');;
+                }
+
+            }
         }
 
+        //Add a new commentaire
+        $comment = new Commentaire();
+        $form = $this->createForm(CommentaireType::class,$comment);
+
+        $form->handleRequest($request);
+
         //Get all data from dossier
-        $dossiers = $dossierRepository->findOneById($dossier);
+        $dos =  $this->dossierRepository->findOneById($dossier);
+        if ($form->isSubmitted() && $form->isValid()){
 
-        //Get all Devis for this dossier
-        $devis = $devisRepository->findDevisDossier($dossier);
+            $user = $request->getSession()->get('user');
+            $us = $this->userRepository->findOneById($user->getId());
 
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $comment->setUpdatedAt(new \DateTimeImmutable());
+            $comment->setDossier($dos);
+            $comment->setUser($us);
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            return $this->redirectToRoute('app_service_dossier',['service'=>$service,'dossier'=>$dossier]);
+        }
+
+
+        $coment  = $this->dossierService->commentaire($dossier);
         return $this->render('service/service_dossier.html.twig',[
-            'dossier'=>$dossiers,
+            'dossier'=>$dos,
             'service'=>$service,
-            'devis'=>$devis,
+            'form'=>$form->createView(),
+            'comment'=>$coment,
          ]);
     }
     /**
-     * @Route("/Service/AjouterDossier/{service}", name="app_service_add_dossier")
+     * @Route("/ajouterDossier/{service}", name="service_add_dossier")
      */
     public function ajouter_dossier( $service, Request $request, SluggerInterface $slugger, ServiceRepository $serviceRepository, EntityManagerInterface $em)
     {
@@ -90,27 +170,8 @@ class ServiceController extends AbstractController
         //Get all services
         $responseService = $serviceRepository->find($service);
         $dossier = new Dossier();
-        $form = $this->createFormBuilder()
-            ->add('nomDossier', TextType::class,[
-                'attr'=>[
-                    'placeholder'=>'Nom du dossier',
-                ],
-                'required'=>true
-            ])
-            ->add('type',ChoiceType::class,[
-                'choices'=>[
-                    'Interne' => 'Interne',
-                    'Externe' => 'Externe'
-                ]
-            ])
-            ->add('client',TextType::class,[
-                'attr'=>[
-                    'placeholder'=>"Nom du client si externe"
-                ],
-                'required'=>false
-            ])
-            ->getForm();
-        ;
+        $form = $this->createForm(DossierType::class,$dossier);
+
         //Hydrate data
         $form->handleRequest($request);
 
@@ -129,7 +190,6 @@ class ServiceController extends AbstractController
                 $em->persist($client);
                 $em->flush();
             }
-
 
             $dossier->setNomDossier($form->get('nomDossier')->getData());
             $dossier->setType($form->get('type')->getData());
@@ -155,7 +215,7 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("/Service/ModifierDossier/{dossier}/{service}", name="app_service_update_dossier")
+     * @Route("/ModifierDossier/{dossier}/{service}", name="service_update_dossier")
      */
     public function modifier_dossier(Dossier $dossier, $service, Request $request,ServiceRepository $serviceRepository,EntityManagerInterface $em)
     {
@@ -172,6 +232,8 @@ class ServiceController extends AbstractController
             $dossier->setUpdatedAt(new \DateTimeImmutable());
             $em->persist($dossier);
             $em->flush();
+
+          return $this->redirectToRoute('app_service_dossier',['service'=>$service, 'dossier'=>$dossier->getId()]);
         }
 
         return $this->render('service/up_dossier.html.twig',[
@@ -181,7 +243,7 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("/Service/CloturerDossier/{service}", name="app_service_cloturer_dossier")
+     * @Route("/CloturerDossier/{service}", name="service_cloturer_dossier")
      */
     public function cloturer_dossier($service,ServiceRepository $serviceRepository,DossierRepository $dossierRepository)
     {
@@ -191,7 +253,7 @@ class ServiceController extends AbstractController
         ]);
     }
     /**
-     * @Route("/Service/AjouterDevis/{dossier}/{service}/{dossierNom}", name="app_service_ajouter_devis")
+     * @Route("/AjouterDevis/{dossier}/{service}/{dossierNom}", name="service_ajouter_devis")
      */
     public function ajouter_dossier_devis( $dossier, $service, $dossierNom,FournisseurRepository $fournisseurRepository,EntityManagerInterface $em,ServiceRepository $serviceRepository, Request $request, SluggerInterface $slugger,DossierRepository $dossierRepository)
     {
@@ -280,7 +342,7 @@ class ServiceController extends AbstractController
         }
 
     /**
-     * @Route("/Service/devis_fournisseurs/{name}", name="app_devis_fournisseur")
+     * @Route("/devis_fournisseurs/{name}", name="devis_fournisseur")
      */
     public function devis_fournisseur( $name )
     {
@@ -292,7 +354,7 @@ class ServiceController extends AbstractController
 
 
     /**
-     * @Route("/Service/Historique/{service}", name="app_service_historique_dossier")
+     * @Route("/Historique/{service}", name="service_historique_dossier")
      */
     public function historique_dossier( $service)
     {

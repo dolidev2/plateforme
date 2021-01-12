@@ -9,9 +9,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Unique;
 
 class UserType extends AbstractType
 {
@@ -37,14 +41,26 @@ class UserType extends AbstractType
                     'class'=>'form-control form-control-lg',
                     'placeholder'=>'Login de l\'utilisateur'
                 ],
-                'label'=>'Login de l\'utilisateur'
+                'label'=>'Login de l\'utilisateur',
+                'constraints'=>
+                [
+                    new NotBlank(['message'=>"Le nom d'utilisateur ne doit pas être vide"]),
+                    new Unique(['message'=> "Ce nom d'utilisateur n'est pas valide "])
+                ]
             ])
-            ->add('password',PasswordType::class,[
-                'attr'=>[
-                    'class'=>'form-control form-control-lg',
-                    'placeholder'=>'Mot de passe de l\'utilisateur'
+            ->add('plainpassword',RepeatedType::class,[
+                'mapped'=>false,
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passes doivent correspondre.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => [
+                    'label' => 'Mot de passe',
+                  
                 ],
-                'label'=>'Mot de passe de l\'utilisateur'
+                'second_options' => [
+                    'label' => 'Confirmer le mot de passe',
+                ],
             ])
             ->add('service',EntityType::class,[
                 "class" => Service::class,
@@ -58,13 +74,7 @@ class UserType extends AbstractType
                 ],
                 "label" => "Service",
             ])
-            ->add('role',ChoiceType::class,[
-                'choices'=>[
-                    'Assistant' => 'Assistant',
-                    'Administrateur' => 'Administrateur'
-                ]
-            ])
-        ;
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
