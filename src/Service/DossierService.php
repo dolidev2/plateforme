@@ -7,19 +7,24 @@ namespace App\Service;
 use App\Repository\CommentaireRepository;
 use App\Repository\DossierRepository;
 use App\Repository\ServiceRepository;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class DossierService
 {
     private $dossierRepository;
     private $serviceRepository;
     private $commentRepository;
+    private $em;
 
     public function __construct(DossierRepository $dossierRepository,ServiceRepository $serviceRepository,
-                                CommentaireRepository $commentRepository)
+                                CommentaireRepository $commentRepository,EntityManagerInterface $em)
     {
         $this->dossierRepository = $dossierRepository;
         $this->commentRepository = $commentRepository;
         $this->serviceRepository = $serviceRepository;
+        $this->em = $em;
     }
 
     public function bilanDossier(){
@@ -76,6 +81,34 @@ class DossierService
     public  function commentaire($dossier){
 
         return $this->commentRepository->findCommentDossier($dossier);
+
+    }
+
+    public  function commentaireModifyFromHttpRequest($request,$commentaireIdRequest, $commentaireMessageRequest){
+        
+   
+       $userConnected = $request->getSession()->get('user');
+       $commentaire = $this->commentRepository->findOneById($commentaireIdRequest);
+
+       //Verify who wrote comment
+       if($userConnected->getId() == $commentaire->getUser()->getId()){
+
+            $commentaire->setContent($commentaireMessageRequest);
+            $commentaire->setUpdatedAt(new DateTimeImmutable());
+    
+            $this->em->flush();
+
+            return true;
+       }      
+       return false;
+    }
+    public function ModifierStatutDossier($dossier){
+        
+        //Get dossier to close
+        $dossierToUpdate = $this->dossierRepository->findOneById($dossier);
+        //Set statut
+        $dossierToUpdate->setStatut(1); 
+        $this->em->flush();
 
     }
 

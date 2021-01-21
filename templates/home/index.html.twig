@@ -78,6 +78,7 @@
                                             <a href="#"><h6 class="timeline-title">{{ dossier[5].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                        
                                             <p>{{ dossier[5].dossier_1 }}</p>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
@@ -96,10 +97,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[0].id}) }}"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[0].id ,dossier:dossier[0].dossier_1_id }) }}">
                                             <p>{{ dossier[0].dossier_1 }}</p>
+                                        </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[0].date_1|date("d/m/Y") }}</span>
@@ -110,10 +113,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[0].id}) }}"><h6 class="timeline-title">{{ dossier[0].service }}</h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[0].id ,dossier:dossier[0].dossier_2_id }) }}">
                                             <p> {{ dossier[0].dossier_2 }}</p>
+                                        </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[0].date_2|date("d/m/Y") }}</span>
@@ -126,11 +131,13 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[0].id}) }}"><h6 class="timeline-title">{{ dossier[0].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[0].id ,dossier:dossier[0].dossier_1_id }) }}">
                                             <p>{{ dossier[0].dossier_1 }}</p>
-                                        </div>
+                                        </a>
+                                    </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[0].date_1|date("d/m/Y") }}</span>
                                         </div>
@@ -161,10 +168,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[2].id}) }}"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[2].id ,dossier:dossier[2].dossier_1_id }) }}">
                                             <p>{{ dossier[2].dossier_1 }}</p>
+                                        </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[2].date_1|date("d/m/Y") }}</span>
@@ -175,10 +184,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[2].id}) }}"><h6 class="timeline-title">{{ dossier[2].service }}</h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[2].id ,dossier:dossier[2].dossier_2_id }) }}">
                                             <p> {{ dossier[2].dossier_2 }}</p>
+                                         </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[2].date_2|date("d/m/Y") }}</span>
@@ -191,10 +202,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[2].id}) }}"><h6 class="timeline-title">{{ dossier[2].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[2].id ,dossier:dossier[2].dossier_1_id }) }}">
                                             <p>{{ dossier[2].dossier_1 }}</p>
+                                         </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[2].date_1|date("d/m/Y") }}</span>
@@ -226,10 +239,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[1].id}) }}"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[1].id ,dossier:dossier[1].dossier_1_id }) }}">
                                             <p>{{ dossier[1].dossier_1 }}</p>
+                                         </a>   
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[1].date_1|date("d/m/Y") }}</span>
@@ -240,10 +255,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[1].id}) }}"><h6 class="timeline-title">{{ dossier[1].service }}</h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                          <a href="{{ path('app_service_dossier',{service:dossier[1].id ,dossier:dossier[1].dossier_2_id }) }}">
                                             <p> {{ dossier[1].dossier_2 }}</p>
+                                          </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[1].date_2|date("d/m/Y") }}</span>
@@ -256,10 +273,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[1].id}) }}"><h6 class="timeline-title">{{ dossier[1].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                          <a href="{{ path('app_service_dossier',{service:dossier[1].id ,dossier:dossier[1].dossier_1_id }) }}">
                                             <p>{{ dossier[1].dossier_1 }}</p>
+                                          </a>  
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[1].date_1|date("d/m/Y") }}</span>
@@ -291,10 +310,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[3].id}) }}"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                           <a href="{{ path('app_service_dossier',{service:dossier[3].id ,dossier:dossier[3].dossier_1_id }) }}">
                                             <p>{{ dossier[3].dossier_1 }}</p>
+                                           </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[3].date_1|date("d/m/Y") }}</span>
@@ -305,10 +326,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[3].id}) }}"><h6 class="timeline-title">{{ dossier[3].service }}</h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[3].id ,dossier:dossier[3].dossier_2_id }) }}">
                                             <p> {{ dossier[3].dossier_2 }}</p>
+                                          </a>  
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[3].date_2|date("d/m/Y") }}</span>
@@ -321,10 +344,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[3].id}) }}"><h6 class="timeline-title">{{ dossier[3].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[3].id ,dossier:dossier[3].dossier_1_id }) }}">
                                             <p>{{ dossier[3].dossier_1 }}</p>
+                                          </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[3].date_1|date("d/m/Y") }}</span>
@@ -356,10 +381,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[4].id}) }}"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                        <a href="{{ path('app_service_dossier',{service:dossier[4].id ,dossier:dossier[4].dossier_1_id }) }}">
                                             <p>{{ dossier[4].dossier_1 }}</p>
+                                         </a>   
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[4].date_1|date("d/m/Y") }}</span>
@@ -370,10 +397,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[4].id}) }}"><h6 class="timeline-title">{{ dossier[4].service }}</h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[4].id ,dossier:dossier[4].dossier_2_id }) }}">
                                             <p> {{ dossier[4].dossier_2 }}</p>
+                                         </a>   
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[4].date_2|date("d/m/Y") }}</span>
@@ -386,10 +415,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[4].id}) }}"><h6 class="timeline-title">{{ dossier[4].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                         <a href="{{ path('app_service_dossier',{service:dossier[4].id ,dossier:dossier[4].dossier_1_id }) }}">
                                             <p>{{ dossier[4].dossier_1 }}</p>
+                                         </a>   
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[4].date_1|date("d/m/Y") }}</span>
@@ -421,10 +452,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[6].id}) }}"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                        <a href="{{ path('app_service_dossier',{service:dossier[6].id ,dossier:dossier[6].dossier_1_id }) }}">
                                             <p>{{ dossier[6].dossier_1 }}</p>
+                                         </a>   
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[6].date_1|date("d/m/Y") }}</span>
@@ -435,10 +468,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }}</h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[6].id}) }}"><h6 class="timeline-title">{{ dossier[6].service }}</h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                          <a href="{{ path('app_service_dossier',{service:dossier[6].id ,dossier:dossier[6].dossier_2_id }) }}">
                                             <p> {{ dossier[6].dossier_2 }}</p>
+                                         </a>
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[6].date_2|date("d/m/Y") }}</span>
@@ -451,10 +486,12 @@
                                     <div class="timeline-badge"></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="#"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
+                                            <a href="{{ path('app_service',{id:dossier[6].id}) }}"><h6 class="timeline-title">{{ dossier[6].service }} </h6></a>
                                         </div>
                                         <div class="timeline-body">
+                                        <a href="{{ path('app_service_dossier',{service:dossier[6].id ,dossier:dossier[6].dossier_1_id }) }}">
                                             <p>{{ dossier[6].dossier_1 }}</p>
+                                        </a>    
                                         </div>
                                         <div class="timeline-footer d-flex align-items-center flex-wrap">
                                             <span class="ml-md-auto font-weight-bold">{{ dossier[6].date_1|date("d/m/Y") }}</span>

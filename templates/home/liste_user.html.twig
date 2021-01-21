@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste utilisateur | PromoPub-Integral{% endblock %}
+
+{% block content %}
+    <div style="margin-left: 40%;">
+        <button type="button" class="btn btn-primary btn-rounded btn-fw">Utilisateur</button>
+    </div>
+    <div class="row" style="margin-left: 30%; margin-top: 10px; margin-bottom: 10px;">
+        <div class="col-md-6 col-lg-6 col-sm-6" style=" margin-bottom: 5px;">
+            <a href="{{ path('app_user_inscription')}}"><button type="button" class="btn btn-success btn-rounded btn-fw">Ajouter</button></a>
+        </div>
+
+        <div class="col-md-6 col-lg-6 col-sm-6" style=" margin-bottom: 5px;">
+            <a href="{{ path('app_user_liste')}}"><button type="button" class="btn btn-warning btn-rounded btn-fw">Consulter</button></a>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-xs-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">dossier en cours</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Nom</th>
+                                <th>prénom</th>
+                                <th>Nom d'utilisateur</th>
+                                <th>Service</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                        {# Get data from user connected #}
+                        {% set userConnected = app.session.get('user') %}
+
+                            {# Display data of all users  #}
+                            {% set cptElement = 1 %}
+                            {% if users is defined and users is not null %} 
+                                                                         
+                                {% for us in users %}    
+                                        <tr>
+                                            <td> {{ cptElement }} </td>
+                                            <td> {{ us.nom }}</td>
+                                            <td> {{ us.prenom }}</td>
+                                            <td> {{ us.username }}</td>
+                                            <td> {{ us.service }}</td>
+                                            <td> 
+                                            {% if  "ROLE_ADMIN" in userConnected.roles %}
+                                                <a  href=""><label class="badge badge-success mr-1"><i class="fa fa-user-o"  data-toggle="tooltip" data-placement="top" title="Role"></i></label></a>
+                                                <a  href="{{ path('app_user_modifier',{user:us.userId})}}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a>
+                                                <a  href="{{ path('app_user_supprimer',{user:us.userId})}}"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+                                           {% elseif us.userId == userConnected.id  %}
+                                                 <a  href="{{ path('app_user_modifier',{user:us.userId})}}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a>  
+                                           {% endif %}
+                                            </td>                
+                                        </tr>  
+                                           {% set cptElement = cptElement +1 %}                         
+                                    {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

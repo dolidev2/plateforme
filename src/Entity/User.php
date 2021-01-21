@@ -73,11 +73,16 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity=Creation::class, mappedBy="user")
+     */
+    private $creations;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->creations = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -157,6 +162,7 @@ class User implements UserInterface
     }
     public function getRoles():array
     {
+        $roles = $this->roles;
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -217,6 +223,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($commentaire->getUser() === $this) {
                 $commentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Creation[]
+     */
+    public function getCreations(): Collection
+    {
+        return $this->creations;
+    }
+
+    public function addCreation(Creation $creation): self
+    {
+        if (!$this->creations->contains($creation)) {
+            $this->creations[] = $creation;
+            $creation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreation(Creation $creation): self
+    {
+        if ($this->creations->contains($creation)) {
+            $this->creations->removeElement($creation);
+            // set the owning side to null (unless already changed)
+            if ($creation->getUser() === $this) {
+                $creation->setUser(null);
             }
         }
 

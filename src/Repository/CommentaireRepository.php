@@ -62,6 +62,17 @@ class CommentaireRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
     ;
-}
+    }
+
+    public function findDossierByComment($comment)
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.dossier', 'd')
+            ->andWhere('c.id= :val')
+            ->setParameter('val',$comment)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 
 }

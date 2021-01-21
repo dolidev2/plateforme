@@ -52,11 +52,14 @@ class DossierRepository extends ServiceEntityRepository
      * @param $id
      * @return Dossier|null
      */
-    public function findDossierService($id)
+    public function findDossierService($service)
     {
+        $statut = 0;
         return $this->createQueryBuilder('d')
             ->andWhere('d.service = :id')
-            ->setParameter('id', $id)
+            ->andWhere('d.statut = :val')
+            ->setParameter('id',$service) 
+            ->setParameter('val',  $statut)
             ->orderBy('d.updatedAt', 'DESC')
             ->getQuery()
             ->getResult()
@@ -103,6 +106,20 @@ class DossierRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+
+    public function findNomServiceByDossier($dossier)
+    {
+        return $this->createQueryBuilder('d')
+            ->select('s.nomService as service')
+            ->leftJoin('d.service', 's')
+            ->andWhere('d.id = :val')
+            ->setParameter('val', $dossier)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
+   
 
    
 

@@ -4,7 +4,7 @@
 
 {% block content %}
     <div style="margin-left: 40%;">
-        <button type="button" class="btn btn-primary btn-rounded btn-fw">{{ service.nomService }}</button>
+        <button type="button" class="btn btn-primary btn-rounded btn-fw">{{ service.nomService| upper }}</button>
     </div>
     <div class="row" style="margin-left: 30%; margin-top: 10px; margin-bottom: 10px;">
 
@@ -55,11 +55,11 @@
                                     <td>{{ dossiers.createdAt|date('d/m/Y') }}</td>
                                     <td>{{ dossiers.updatedAt|date('d/m/Y') }}</td>
                                     <td>
-                                        <a  href="{{ path('app_service_dossier',{dossier:dossiers.id, service:service.nomService}) }}"><label class="badge badge-success"><i class="fa fa-eye"  data-toggle="tooltip" data-placement="top" title="Voir plus"></i></label></a>
-                                        <a  href="{{ path('app_service_update_dossier',{dossier:dossiers.id, service:service.nomService}) }}"><label class="badge badge-warning"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a>
+                                        <a  href="{{ path('app_service_dossier',{dossier:dossiers.id, service:service.nomService}) }}"><label class="badge badge-success mr-1"><i class="fa fa-eye"  data-toggle="tooltip" data-placement="top" title="Voir plus"></i></label></a>
+                                        <a  href="{{ path('app_service_update_dossier',{dossier:dossiers.id, service:service.nomService}) }}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a>
                                         <a  href="#"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
                                     </td>
-                                    <td><label class="badge badge-info">En cours</label></td>
+                                    <td><label class="badge badge-info">Terminé</label></td>
                                 </tr>
                                 {% set i = i+1 %}
                             {% endfor %}

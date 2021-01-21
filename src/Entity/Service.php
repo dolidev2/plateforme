@@ -7,12 +7,6 @@ use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Controller\Api\Service\CreateService;
-use App\Controller\Api\Service\UpdateService;
-use App\Controller\Api\Service\ShowService;
-use App\Controller\Api\Service\ShowOneService;
-use App\Controller\Api\Service\ShowOneServiceByName;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)

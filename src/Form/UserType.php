@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Unique;
 
@@ -45,23 +46,19 @@ class UserType extends AbstractType
                 'constraints'=>
                 [
                     new NotBlank(['message'=>"Le nom d'utilisateur ne doit pas être vide"]),
-                    new Unique(['message'=> "Ce nom d'utilisateur n'est pas valide "])
+                  
                 ]
             ])
-            ->add('plainpassword',RepeatedType::class,[
-                'mapped'=>false,
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passes doivent correspondre.',
-                'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
-                'first_options'  => [
-                    'label' => 'Mot de passe',
-                  
+            ->add('password',PasswordType::class,[
+                'label' => 'Mot de passe',
+                'attr'=>[
+                    'placeholder'=>'Entrez le mot de passe'
                 ],
-                'second_options' => [
-                    'label' => 'Confirmer le mot de passe',
-                ],
-            ])
+                'constraints'=>
+                [
+                    new Length(['min'=>6])
+                ]
+                ])
             ->add('service',EntityType::class,[
                 "class" => Service::class,
                 'query_builder' => function (EntityRepository $er) {

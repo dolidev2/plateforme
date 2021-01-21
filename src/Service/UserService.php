@@ -32,4 +32,11 @@ class UserService
         return   $this->session->set('dossier',$this->dossierService->bilanDossier());
     }
 
+
+    public function userInfo()
+    {
+       return $this->user->findUserInfo();
+      
+    }
+
 }

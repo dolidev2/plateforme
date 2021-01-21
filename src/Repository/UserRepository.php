@@ -50,5 +50,14 @@ class UserRepository extends ServiceEntityRepository
 
 */
 
-
+    public function findUserInfo()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.id as userId','u.nom','u.prenom','u.username','u.roles','s.nomService as service')
+            ->leftJoin('u.service','s')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+ 
 }

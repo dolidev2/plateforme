@@ -13,7 +13,6 @@ use App\Form\DevisType;
 use App\Form\DossierType;
 use App\Form\FournisseurType;
 use App\Repository\CommentaireRepository;
-use App\Repository\DevisRepository;
 use App\Repository\DossierRepository;
 use App\Repository\FournisseurRepository;
 use App\Repository\ServiceRepository;
@@ -24,11 +23,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\Publisher;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\String\Slugger\SluggerInterface;
 /**
  * @Route("/service", name="app_")
@@ -41,15 +41,32 @@ class ServiceController extends AbstractController
     private $dossierRepository;
     private $dossierService;
     private $userRepository;
+    private $commentaireRepository;
     private $em;
 
     public  function __construct( DossierRepository $dossierRepository,UserRepository $userRepository,
-                                  EntityManagerInterface $em,DossierService $dossierService)
+                                  EntityManagerInterface $em,DossierService $dossierService
+                                  ,CommentaireRepository $commentaireRepository)
     {
         $this->dossierRepository = $dossierRepository;
         $this->userRepository = $userRepository;
+        $this->commentaireRepository = $commentaireRepository;
         $this->dossierService = $dossierService;
         $this->em = $em;
+    }
+
+    public function __invoke(PublisherInterface $publisher) : Response
+    {
+        $update = new Update(
+            'http://plateforme.com/users/comment',
+            json_encode(['status' => 'OutOfStock'])
+        );
+
+        // The Publisher service is an invokable object
+        $publisher($update);
+
+        return new Response('published!');
+        
     }
 
     /**
@@ -79,52 +96,38 @@ class ServiceController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{service}/{dossier}/Details", name="service_dossier")
+     * @Route("/{service}/{dossier}/Details", name="service_dossier" )
      */
-    public function service_dossier($dossier,$service,CommentaireRepository $commentaireRepository,Request $request,EntityManagerInterface $em)
+    public function service_dossier($dossier,$service,Request $request,EntityManagerInterface $em)
     {
         /**
          * if data send with ajax
          */
         if($request->isXmlHttpRequest()){
 
-            //Get vente, cout and dossierId for each dossier posted
+            $dossier = $request->request->get('dossier');
+            if ( isset($dossier) && !empty($dossier) ){
 
-            $dossierId = $request->request->get('dossier');
-            if ( isset($dossierId) && !empty($dossierId) ){
-                //Get dossier to close
-                $dosier = $this->dossierRepository->findOneById($dossierId);
-                //Set statut
-                $dosier->setStatut(1);
-                //Persist and save
-                $em->persist($dosier);
-                $em->flush();
+                $this->dossierService->ModifierStatutDossier($dossier);
 
-                return new \Symfony\Component\HttpFoundation\JsonResponse($dosier);
+                return new \Symfony\Component\HttpFoundation\JsonResponse('bon');
             }
-            $commentId = $request->request->get('id');
+            $commentIdRequested = $request->request->get('id');
 
-            if(isset($commentId) && !empty($commentId)){
+            if(isset($commentIdRequested) && !empty($commentIdRequested)){
+               
+                //Updated user comment 
+                $responseUpdatedComment = $this
+                                        ->dossierService
+                                        ->commentaireModifyFromHttpRequest(
+                                                 $request,
+                                                 $commentIdRequested,
+                                                 $request->request->get('message')
+                                                );
 
-                $user = $request->getSession()->get('user');
-                $us = $this->userRepository->findOneById($user->getId());
-
-                $commentMessage = $request->request->get('message');
-                $commentObjet = $commentaireRepository->findOneById($commentId);
-
-                if($us->getId() == $commentObjet->getUser()->getId()){
-
-                    $commentObjet->setContent($commentMessage);
-                    $commentObjet->setUpdatedAt(new \DateTimeImmutable());
-
-                    $em->persist($commentObjet);
-                    $em->flush();
-                    return new \Symfony\Component\HttpFoundation\JsonResponse('bon');;
-                }else{
-                    return new \Symfony\Component\HttpFoundation\JsonResponse('mauvais');;
-                }
-
+                return new \Symfony\Component\HttpFoundation\JsonResponse($responseUpdatedComment);
             }
         }
 
@@ -153,12 +156,12 @@ class ServiceController extends AbstractController
         }
 
 
-        $coment  = $this->dossierService->commentaire($dossier);
+        $commentaire  = $this->dossierService->commentaire($dossier);
         return $this->render('service/service_dossier.html.twig',[
             'dossier'=>$dos,
             'service'=>$service,
             'form'=>$form->createView(),
-            'comment'=>$coment,
+            'comment'=>$commentaire,
          ]);
     }
     /**
@@ -240,6 +243,27 @@ class ServiceController extends AbstractController
             'service'=>$responseService[0],
             'form'=>$form->createView(),
         ]);
+    }
+
+     
+    /**
+     * @Route("/supprimer/dossier/{dossier}/{service}", name="supprimer_dossier")
+     */
+    public function dossier_supprimer(Dossier $dossier,$service,EntityManagerInterface $em)
+    {
+
+        $comment = $this->commentaireRepository->findCommentDossier($dossier);
+        foreach ($comment as $cm) {
+
+           $commentToRemove = $this->commentaireRepository->findOneById($cm['contentId']);
+           $em->remove($commentToRemove);
+           $em->flush();
+        }
+
+        $em->remove($dossier);
+        $em->flush();
+
+        return $this->redirectToRoute('app_service',['id'=>$service]);
     }
 
     /**
@@ -357,6 +381,16 @@ class ServiceController extends AbstractController
      * @Route("/Historique/{service}", name="service_historique_dossier")
      */
     public function historique_dossier( $service)
+    {
+        return $this->render('service/story_dossier.html.twig',[
+            'service'=>$service
+        ]);
+    }
+
+    /**
+     * @Route("/{service}/creation", name="service_pao_creation")
+     */
+    public function pao_creation($service)
     {
         return $this->render('service/story_dossier.html.twig',[
             'service'=>$service
