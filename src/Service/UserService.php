@@ -5,7 +5,6 @@ namespace App\Service;
 
 
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class UserService

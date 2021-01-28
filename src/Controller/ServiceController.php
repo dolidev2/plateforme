@@ -19,6 +19,7 @@ use App\Repository\ServiceRepository;
 use App\Repository\UserRepository;
 use App\Service\DossierService;
 use App\Service\FileUploader;
+use App\Service\PaoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,17 +41,22 @@ class ServiceController extends AbstractController
     
     private $dossierRepository;
     private $dossierService;
+    private $paoService;
     private $userRepository;
     private $commentaireRepository;
+    private $serviceRepository;
     private $em;
 
     public  function __construct( DossierRepository $dossierRepository,UserRepository $userRepository,
                                   EntityManagerInterface $em,DossierService $dossierService
-                                  ,CommentaireRepository $commentaireRepository)
+                                  ,CommentaireRepository $commentaireRepository,PaoService $paoService,
+                                  ServiceRepository $serviceRepository)
     {
         $this->dossierRepository = $dossierRepository;
+        $this->paoService = $paoService;
         $this->userRepository = $userRepository;
         $this->commentaireRepository = $commentaireRepository;
+        $this->serviceRepository = $serviceRepository;
         $this->dossierService = $dossierService;
         $this->em = $em;
     }
@@ -102,23 +108,18 @@ class ServiceController extends AbstractController
      */
     public function service_dossier($dossier,$service,Request $request,EntityManagerInterface $em)
     {
-        /**
-         * if data send with ajax
-         */
+        
         if($request->isXmlHttpRequest()){
 
             $dossier = $request->request->get('dossier');
+
             if ( isset($dossier) && !empty($dossier) ){
-
                 $this->dossierService->ModifierStatutDossier($dossier);
-
                 return new \Symfony\Component\HttpFoundation\JsonResponse('bon');
             }
             $commentIdRequested = $request->request->get('id');
 
             if(isset($commentIdRequested) && !empty($commentIdRequested)){
-               
-                //Updated user comment 
                 $responseUpdatedComment = $this
                                         ->dossierService
                                         ->commentaireModifyFromHttpRequest(
@@ -126,19 +127,17 @@ class ServiceController extends AbstractController
                                                  $commentIdRequested,
                                                  $request->request->get('message')
                                                 );
-
                 return new \Symfony\Component\HttpFoundation\JsonResponse($responseUpdatedComment);
             }
-        }
+        } 
 
-        //Add a new commentaire
+        $commentaire  = $this->dossierService->commentaire($dossier);
+        $dos =  $this->dossierRepository->findOneById($dossier);
+
         $comment = new Commentaire();
         $form = $this->createForm(CommentaireType::class,$comment);
-
         $form->handleRequest($request);
 
-        //Get all data from dossier
-        $dos =  $this->dossierRepository->findOneById($dossier);
         if ($form->isSubmitted() && $form->isValid()){
 
             $user = $request->getSession()->get('user');
@@ -151,12 +150,8 @@ class ServiceController extends AbstractController
 
             $this->em->persist($comment);
             $this->em->flush();
-
             return $this->redirectToRoute('app_service_dossier',['service'=>$service,'dossier'=>$dossier]);
         }
-
-
-        $commentaire  = $this->dossierService->commentaire($dossier);
         return $this->render('service/service_dossier.html.twig',[
             'dossier'=>$dos,
             'service'=>$service,
@@ -387,15 +382,8 @@ class ServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{service}/creation", name="service_pao_creation")
-     */
-    public function pao_creation($service)
-    {
-        return $this->render('service/story_dossier.html.twig',[
-            'service'=>$service
-        ]);
-    }
+   
+
 
 
 }

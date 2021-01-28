@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ service.nomService }} | Modifier {{ type | title}}{% endblock %}
+
+
+{% block content %}
+  <div style="margin-left: 32%;">
+       <button type="button" class="btn btn-primary btn-rounded btn-fw">{{  service.nomService | upper }} | {{ type | title}}</button>
+  </div>
+   <div style="margin-left: 30%;">
+        <div class="mr-1 mb-1 mt-1" >
+            <a href="{{ path('app_service_direction_facture_ajouter',{ type: type })}}"><button type="button" class="btn btn-success btn-rounded btn-fw mr-1">Ajouter</button></a>
+            <a href="{{ path('app_service_direction_facture_consulter',{ type:type })}}"><button type="button" class="btn btn-warning btn-rounded btn-fw mr-1">Consulter</button></a>
+        </div>
+    </div>
+  <div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Modifier {{ type }}</h4>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mr-2">Modifier</button>
+                <button type="reset" class="btn btn-light">Annuler</button>
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

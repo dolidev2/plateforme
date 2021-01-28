@@ -13,23 +13,7 @@
        <button type="button" class="btn btn-primary btn-rounded btn-fw mb-1">{{ service }} | {{ dossier.nomDossier }}</button>
     </div>
     <br>
- {# Notification toast #}
-{# <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-<div class="toast" data-delay="5000" id="messages" style="position: absolute; top: 0; left: 0;">
-    <div class="toast-header">
-    {# <img src="..." class="rounded mr-2" alt="..."> #}
-    {# <strong class="mr-auto">Clôture du dossier</strong>
-    <small></small>
-    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    <div class="toast-body">
-        <button class="btn btn-success">Dossier clôturé avec succès !!!  </button>
-    </div>
-</div> #}
-{# </div> #} 
-{# End toast  #}
+<div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -58,7 +42,9 @@
                                     </div>
                                     <br>
                                     <input type="hidden" id="dossierId" value="{{ dossier.id }}">
-                                    <button style="margin-left: 32.3%;"  id="cloturer" class="btn btn-primary">Clôturer</button>
+                                    {% if dossier.service.id == app.user.service.id %}
+                                        <button style="margin-left: 32.3%;"  id="cloturer" class="btn btn-primary">Clôturer</button>
+                                    {% endif %}
                                 </div>
                                 </div>
                             </div>
@@ -85,9 +71,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
+ </div>
     {% if comment is defined and comment is not null %}
     {% set user = app.user %}
+    <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -264,6 +252,7 @@
                         </div>
                     </div>
                 </div>
+        </div>
         </div>
     {% endif %}
        

@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CreationRepository extends ServiceEntityRepository
 {
+  
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Creation::class);
@@ -47,4 +49,31 @@ class CreationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+   
+    public function findCreationOrder($type)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.id','c.createdAt','c.client','c.description','c.statut','c.emetteur','u.prenom','u.nom', 'u.id as user')
+            ->leftJoin('c.user','u')
+            ->andWhere('c.type = :type')
+            ->setParameter('type', $type)
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }    
+
+    public function findCreationByUser($user)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.id','c.createdAt','c.client','c.description','c.statut','c.emetteur','c.type')
+            ->leftJoin('c.user','u')
+            ->orderBy('c.createdAt', 'DESC')
+            ->andWhere('c.user = :userPao')
+            ->setParameter('userPao', $user)
+            ->getQuery()
+            ->getResult()
+        ;
+    }    
 }

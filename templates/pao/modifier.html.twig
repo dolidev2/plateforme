@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ service.nomService }} | Modifier Création{% endblock %}
+
+
+{% block content %}
+  <div style="margin-left: 40%;">
+       <button type="button" class="btn btn-primary btn-rounded btn-fw">{{  service.nomService | upper }} | Création</button>
+  </div>
+      {% include "pao/menu.html.twig" %}
+  <div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Modifier la Création</h4>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary mr-2">Modifier</button>
+                <button type="reset" class="btn btn-light">Annuler</button>
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -78,10 +78,16 @@ class User implements UserInterface
      */
     private $creations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Facture::class, mappedBy="user")
+     */
+    private $factures;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->creations = new ArrayCollection();
+        $this->factures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,6 +260,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($creation->getUser() === $this) {
                 $creation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Facture[]
+     */
+    public function getFactures(): Collection
+    {
+        return $this->factures;
+    }
+
+    public function addFacture(Facture $facture): self
+    {
+        if (!$this->factures->contains($facture)) {
+            $this->factures[] = $facture;
+            $facture->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacture(Facture $facture): self
+    {
+        if ($this->factures->removeElement($facture)) {
+            // set the owning side to null (unless already changed)
+            if ($facture->getUser() === $this) {
+                $facture->setUser(null);
             }
         }
 

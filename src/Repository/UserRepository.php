@@ -59,5 +59,25 @@ class UserRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findUserPao($service)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.service = :service')
+            ->setParameter('service', $service)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findUserDirection($service)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.service = :service')
+            ->setParameter('service', $service)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
  
 }

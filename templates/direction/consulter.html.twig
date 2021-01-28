@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} PromoPub-Integral | {{ service.nomService }} | {{ type }}{% endblock %}
+{% block link %}
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+
+  <div style="margin-left: 32%;">
+       <button type="button" class="btn btn-primary btn-rounded btn-fw">{{  service.nomService | upper }} | {{ type | title }}</button>
+  </div>
+    <div style="margin-left: 30%;">
+        <div class="mr-1 mb-1 mt-1" >
+            <a href="{{ path('app_service_direction_facture_ajouter',{ type: type })}}"><button type="button" class="btn btn-success btn-rounded btn-fw mr-1">Ajouter</button></a>
+            <a href="{{ path('app_service_direction_facture_consulter',{ type:type })}}"><button type="button" class="btn btn-warning btn-rounded btn-fw mr-1">Consulter</button></a>
+            <button  data-toggle="modal" data-target="#dt_search" type="button" class="btn btn-info btn-rounded btn-fw mr-1">Date</button>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title col-4">{{ type }}</h4>               
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Description</th>
+                            <th>Responsable</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if facture is defined and facture is null %}
+                            <tr>
+                                <td></td>
+                                <td></td> 
+                                <td></td>
+                                <td></td>
+                                <td><h4>Aucune {{type | title}} en cours</h4></td>
+                            </tr>
+                        {% elseif  facture is defined and facture is not null %}
+                            {% set i =1 %}
+                            {% for ft in facture %}
+                                <tr>
+                                    <td>{{ i }}</td>
+                                    <td>{{ ft.createdAt | date("d-m-Y") }}</td>
+                                    <td>{{ ft.client }}</td>
+                                    <td>{{ ft.description }}</td>
+                                    <td>{{ ft.prenom }} {{ ft.nom }}</td>
+                                    <td>
+                                        {% set user = app.user %}
+                                        {% if user.id == ft.user %}
+                                            <a  href="{{ path('app_service_direction_facture_modifier',{facture:ft.id,type: type})}}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a> 
+                                            <a  href="{{ path('app_service_direction_facture_supprimer',{facture:ft.id,type: type})}}"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% set i = i+1 %}
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> 
+    </div>
+
+<div>
+    <div class="modal fade" id="dt_search" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="ModalLabel">Choisir une date à rechercher</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="message-text" class="col-form-label">Date:</label>
+                <input type="date" class="form-control" id="dt_">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btn_valider">Valider</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+
+            $('#btn_valider').on('click', function () {
+               var date = $('#dt_').val();
+               var url = "{{ path('app_service_direction_facture_consulter_date',{'type':'typ','date':'dat'})}}";
+               url.replace('typ' : {{ type}});
+               url.replace('dat' : date);
+               window.location.href= url;
+            });
+        });
+    </script>
+{% endblock %}

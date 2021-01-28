@@ -1,0 +1,146 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}PromoPub-Integral | Pao {% endblock %}
+
+{% block content %}
+<div style="margin-left: 40%;">
+    <button type="button" class="btn btn-primary btn-rounded btn-fw">{{  service.nomService | upper }}</button>
+</div>
+{% include "pao/menu.html.twig" %}
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+    {% set numAccordion = 1 %}
+        {% for uc in userCreation %}
+
+            {% if numAccordion == 1 %}
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="mt-4">
+                        <div class="accordion" id="accordion" role="tablist">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="heading-{{numAccordion}}">
+                                <h6 class="mb-0">
+                                    <a data-toggle="collapse" href="#collapse-{{numAccordion}}" aria-expanded="true" aria-controls="collapse-{{numAccordion}}">
+                                      Responsable: {{ uc.user.prenom | upper}} {{ uc.user.nom | upper}}
+                                    </a>
+                                </h6>
+                                </div>
+                                <div id="collapse-1" class="collapse show" role="tabpanel" aria-labelledby="heading-{{numAccordion}}" data-parent="#accordion">
+                                <div class="card-body">
+                                    <h4 class="card-title">mois de janvier</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>Date</th>
+                                                    <th>Annonceur</th>
+                                                    <th>Tâche à faire</th>
+                                                    <th>Demandeur</th>
+                                                    <th>Type</th>
+                                                    <th>Statut</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% set cpt = 1 %}
+                                                {% for ct in uc.creation  %}                                            
+                                                    <tr>
+                                                        <td>{{ cpt }}</td>
+                                                        <td> {{ ct.createdAt | date("m-Y")}}</td>
+                                                        <td>{{ct.client}}</td>
+                                                        <td>{{ct.description}}</td> 
+                                                        <td>{{ct.emetteur}}</td>
+                                                        <td>{{ct.type | title}}</td>
+                                                        <td>
+                                                             {% if ct.statut == 0 %}
+                                                                <button class="btn btn-info">En Cours</button>
+                                                            {% else %}
+                                                                <button class="btn btn-success">Terminé</button>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                          {% if app.user.id == uc.user.id %}
+                                                            <a  href="{{ path('app_service_pao_creation_modifier',{creation:ct.id,type:type})}}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a> 
+                                                            <a  href="{{ path('app_service_pao_creation_supprimer',{creation:ct.id, type:type})}}"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+                                                         {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    {% set cpt = cpt + 1 %}
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                                
+                            <div class="card">
+                                <div class="card-header" role="tab" id="heading-{{numAccordion}}">
+                                    <h6 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapse-{{numAccordion}}" aria-expanded="false" aria-controls="collapse-{{numAccordion}}">
+                                              Responsable: {{ uc.user.prenom | upper}} {{ uc.user.nom | upper}}
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div id="collapse-{{numAccordion}}" class="collapse" role="tabpanel" aria-labelledby="heading-{{numAccordion}}" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <h4 class="card-title">mois de janvier </h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                   <th>N°</th>
+                                                    <th>Date</th>
+                                                    <th>Annonceur</th>
+                                                    <th>Description</th>
+                                                    <th>Demandeur</th>
+                                                    <th>Statut</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% set cpt = 1 %}
+                                                {% for ct in uc.creation  %}                                            
+                                                    <tr>
+                                                        <td>{{ cpt }}</td>
+                                                        <td> {{ ct.createdAt | date("m-Y")}}</td>
+                                                        <td>{{ct.client}}</td>
+                                                        <td>{{ct.description}}</td> 
+                                                        <td>{{ct.emetteur}}</td>
+                                                        <td>
+                                                             {% if ct.statut == 0 %}
+                                                                <button class="btn btn-info">En Cours</button>
+                                                            {% else %}
+                                                                <button class="btn btn-success">Terminé</button>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                        {% if app.user.id == uc.user.id %}
+                                                            <a  href="{{ path('app_service_pao_creation_modifier',{creation:ct.id,type:type})}}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a> 
+                                                            <a  href="{{ path('app_service_pao_creation_supprimer',{creation:ct.id, type:type})}}"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+                                                         {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    {% set cpt = cpt + 1 %}
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+           {% endif %}
+           {% set numAccordion = numAccordion + 1 %}
+        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+ </div>
+
+{% endblock %}
