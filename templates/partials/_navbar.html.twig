@@ -65,14 +65,14 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="{{ path('app_service',{id: 4}) }}" class="nav-link">
+                <a href="{{ path('app_service_commercial_consulter',{type:'sodibo',support: '12m²'})}}" class="nav-link">
                     <i class="mdi mdi-view-headline menu-icon"></i>
                     <span class="menu-title">Réseau</span>
                     <i class="menu-arrow"></i></a>
                 <div class="submenu">
                     <ul class="submenu-item">
-                        <li class="nav-item"><a class="nav-link" href="">Sodibo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Autre</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_service_commercial_consulter',{type:'sodibo',support: '12m²'})}}">Sodibo</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_service_commercial_consulter',{type:'client',support: '12m²'})}}">Autre</a></li>
                     </ul>
                 </div>
             </li>

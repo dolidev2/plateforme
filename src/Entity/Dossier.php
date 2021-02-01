@@ -3,91 +3,13 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\DossierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Controller\Api\Dossier\CreateDossier;
-use App\Controller\Api\Dossier\UpdateDossier;
-use App\Controller\Api\Dossier\UpdateMargeDossier;
-use App\Controller\Api\Dossier\ShowDossier;
-use App\Controller\Api\Dossier\ShowDossierService;
-use App\Controller\Api\Dossier\ShowDossierServiceLimit;
-use App\Controller\Api\Dossier\ShowDossierOpen;
-use App\Controller\Api\Dossier\ShowDossierClose;
-use App\Controller\Api\Dossier\ShowOneDossier;
-use App\Controller\Api\Dossier\DeleteDossier;
-use App\Controller\Api\Dossier\findDossier;
-use App\Controller\Api\Dossier\CloseDossier;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DossierRepository::class)
- *@ApiResource(
- *     normalizationContext={
- *          "groups"={"dossier:read"}
- *  },
- *     denormalizationContext={
- *          "groups"={"dossier:write"}
- *  },
- *     collectionOperations={
- *        "get"={
- *          "path"= "/dossiers",
- *          "controller"= ShowDossier::class
- *     },
- *       "post"={
- *          "path"= "/dossiers",
- *          "controller"= CreateDossier::class
- *     },
- *       "open"={
- *          "method"="GET",
- *          "path"= "/dossiers/{dossier}/open",
- *          "controller"= ShowDossierOpen::class
- *     },
- *       "close"={
- *          "method"="GET",
- *          "path"= "/dossiers/{dossier}/close",
- *          "controller"= ShowDossierClose::class
- *     },
- *      "closeDossier"={
- *          "method"="GET",
- *          "path"= "/dossiers/{dossier}/close/dossier",
- *          "controller"= CloseDossier::class
- *     },
- *
- *       "dossier_service"={
- *          "method"="GET",
- *          "path"= "/dossiers/{service}/service",
- *          "controller"= ShowDossierService::class
- *     },
- *     "dossier_service_limit"={
- *          "method"="GET",
- *          "path"= "/dossiers/{service}/services",
- *          "controller"= ShowDossierServiceLimit::class
- *     },
- *     "find_dossier"={
- *          "method"="GET",
- *          "path"= "/dossiers/{name}/dossiers",
- *          "controller"=findDossier::class
- *     },
- *        "marge_dossier"={
- *          "method"="GET",
- *          "path"= "/dossiers/marge/{id}/{vente}/{cout}",
- *          "controller"= UpdateMargeDossier::class
- *       },
- *     },
- *     itemOperations={
- *      "get"={
- *          "path"= "/dossiers/{id}",
- *          "controller"= ShowOneDossier::class
- *       },
- *     "put"={
- *          "path"= "/dossiers/{id}",
- *          "controller"= UpdateDossier::class
- *       },
- *     "delete"
- *}
- * )
  */
 class Dossier
 {
@@ -104,18 +26,6 @@ class Dossier
      * @Groups({"dossier:read","dossier:write"})
      */
     private $nomDossier;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Groups({"dossier:read","dossier:write"})
-     */
-    private $cout;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Groups({"dossier:read","dossier:write"})
-     */
-    private $vente;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -146,13 +56,6 @@ class Dossier
      * @Groups({"dossier:read","dossier:write"})
      */
     private $updatedAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="dossier", cascade={"persist"})
-     * @Groups({"dossier:read","dossier:write"})
-     */
-    private $devis;
-
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
      * @Groups({"dossier:read","dossier:write"})
@@ -358,6 +261,18 @@ class Dossier
     public function setDescript(?string $descript): self
     {
         $this->descript = $descript;
+
+        return $this;
+    }
+
+    public function getCommercial(): ?string
+    {
+        return $this->commercial;
+    }
+
+    public function setCommercial(?string $commercial): self
+    {
+        $this->commercial = $commercial;
 
         return $this;
     }

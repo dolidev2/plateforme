@@ -83,11 +83,17 @@ class User implements UserInterface
      */
     private $factures;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commercial::class, mappedBy="user")
+     */
+    private $commercials;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->creations = new ArrayCollection();
         $this->factures = new ArrayCollection();
+        $this->commercials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,6 +296,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($facture->getUser() === $this) {
                 $facture->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commercial[]
+     */
+    public function getCommercials(): Collection
+    {
+        return $this->commercials;
+    }
+
+    public function addCommercial(Commercial $commercial): self
+    {
+        if (!$this->commercials->contains($commercial)) {
+            $this->commercials[] = $commercial;
+            $commercial->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommercial(Commercial $commercial): self
+    {
+        if ($this->commercials->removeElement($commercial)) {
+            // set the owning side to null (unless already changed)
+            if ($commercial->getUser() === $this) {
+                $commercial->setUser(null);
             }
         }
 
