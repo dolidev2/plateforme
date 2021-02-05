@@ -9,12 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Controller\Api\User\CreateUser;
-use App\Controller\Api\User\UpdateUser;
-use App\Controller\Api\User\ShowUser;
-use App\Controller\Api\User\ShowOneUser;
-use App\Controller\Api\User\LoginUser;
-use App\Controller\Api\User\PasswordResetUser;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -88,12 +82,36 @@ class User implements UserInterface
      */
     private $commercials;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FichierComptabilite::class, mappedBy="user")
+     */
+    private $fichierComptabilite;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comptabilite::class, mappedBy="user")
+     */
+    private $comptabilites;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProgrammeMarketing::class, mappedBy="user")
+     */
+    private $programmeMarketings;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TacheMarketing::class, mappedBy="user")
+     */
+    private $tacheMarketings;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->creations = new ArrayCollection();
         $this->factures = new ArrayCollection();
         $this->commercials = new ArrayCollection();
+        $this->fichierComptabilite = new ArrayCollection();
+        $this->comptabilites = new ArrayCollection();
+        $this->programmeMarketings = new ArrayCollection();
+        $this->tacheMarketings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -332,6 +350,123 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Collection|FichierComptabilite[]
+     */
+    public function getFichierComptabilite(): Collection
+    {
+        return $this->fichierComptabilite;
+    }
 
+    public function addFichierComptabilite(FichierComptabilite $comptabilite): self
+    {
+        if (!$this->fichierComptabilite->contains($comptabilite)) {
+            $this->fichierComptabilite[] = $comptabilite;
+            $comptabilite->setUser($this);
+        }
 
+        return $this;
+    }
+
+    public function removeFichierComptabilite(FichierComptabilite $comptabilite): self
+    {
+        if ($this->fichierComptabilite->removeElement($comptabilite)) {
+            // set the owning side to null (unless already changed)
+            if ($comptabilite->getUser() === $this) {
+                $comptabilite->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comptabilite[]
+     */
+    public function getComptabilites(): Collection
+    {
+        return $this->comptabilites;
+    }
+
+    public function addComptabilite(Comptabilite $comptabilite): self
+    {
+        if (!$this->comptabilites->contains($comptabilite)) {
+            $this->comptabilites[] = $comptabilite;
+            $comptabilite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComptabilite(Comptabilite $comptabilite): self
+    {
+        if ($this->comptabilites->removeElement($comptabilite)) {
+            // set the owning side to null (unless already changed)
+            if ($comptabilite->getUser() === $this) {
+                $comptabilite->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgrammeMarketing[]
+     */
+    public function getProgrammeMarketings(): Collection
+    {
+        return $this->programmeMarketings;
+    }
+
+    public function addProgrammeMarketing(ProgrammeMarketing $programmeMarketing): self
+    {
+        if (!$this->programmeMarketings->contains($programmeMarketing)) {
+            $this->programmeMarketings[] = $programmeMarketing;
+            $programmeMarketing->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgrammeMarketing(ProgrammeMarketing $programmeMarketing): self
+    {
+        if ($this->programmeMarketings->removeElement($programmeMarketing)) {
+            // set the owning side to null (unless already changed)
+            if ($programmeMarketing->getUser() === $this) {
+                $programmeMarketing->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TacheMarketing[]
+     */
+    public function getTacheMarketings(): Collection
+    {
+        return $this->tacheMarketings;
+    }
+
+    public function addTacheMarketing(TacheMarketing $tacheMarketing): self
+    {
+        if (!$this->tacheMarketings->contains($tacheMarketing)) {
+            $this->tacheMarketings[] = $tacheMarketing;
+            $tacheMarketing->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTacheMarketing(TacheMarketing $tacheMarketing): self
+    {
+        if ($this->tacheMarketings->removeElement($tacheMarketing)) {
+            // set the owning side to null (unless already changed)
+            if ($tacheMarketing->getUser() === $this) {
+                $tacheMarketing->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

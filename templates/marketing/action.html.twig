@@ -1,0 +1,7 @@
+ <a  href="{{ path('app_service_marketing_consulter_detail',{programme:dos.id})}}">
+    <label class="badge badge-success mr-1"><i class="fa fa-eye"  data-toggle="tooltip" data-placement="top" title="Voir plus"></i></label>
+ </a>
+{% if app.user.id == dos.user.id %}
+    <a  href="{{ path('app_service_marketing_modifier',{programme:dos.id})}}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a> 
+    <a  href="{{ path('app_service_marketing_supprimer',{programme:dos.id})}}"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+{% endif %}

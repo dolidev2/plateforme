@@ -18,9 +18,9 @@ class CommercialService {
         return $this->commercialRepository->findDossierCours($type,$support);
     }
 
-    public function afficherDossierClocturer($type)
+    public function afficherDossierClocturer($type,$support)
     {
-        return $this->commercialRepository->findDossierCloturer($type);
+        return $this->commercialRepository->findDossierCloturer($type,$support);
     }
 
 }

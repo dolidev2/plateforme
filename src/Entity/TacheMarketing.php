@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CommercialRepository;
+use App\Repository\TacheMarketingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CommercialRepository::class)
+ * @ORM\Entity(repositoryClass=TacheMarketingRepository::class)
  */
-class Commercial
+class TacheMarketing
 {
     /**
      * @ORM\Id
@@ -20,7 +20,7 @@ class Commercial
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $nom;
+    private $responsable;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -28,14 +28,14 @@ class Commercial
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $type;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $statut;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tacheMarketings")
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -48,29 +48,23 @@ class Commercial
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commercials")
+     * @ORM\ManyToOne(targetEntity=ProgrammeMarketing::class, inversedBy="tacheMarketings")
      */
-    private $user;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $support;
-
+    private $programme;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getResponsable(): ?string
     {
-        return $this->nom;
+        return $this->responsable;
     }
 
-    public function setNom(?string $nom): self
+    public function setResponsable(?string $responsable): self
     {
-        $this->nom = $nom;
+        $this->responsable = $responsable;
 
         return $this;
     }
@@ -87,18 +81,6 @@ class Commercial
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getStatut(): ?string
     {
         return $this->statut;
@@ -107,6 +89,18 @@ class Commercial
     public function setStatut(?string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
@@ -135,26 +129,14 @@ class Commercial
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getProgramme(): ?ProgrammeMarketing
     {
-        return $this->user;
+        return $this->programme;
     }
 
-    public function setUser(?User $user): self
+    public function setProgramme(?ProgrammeMarketing $programme): self
     {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getSupport(): ?string
-    {
-        return $this->support;
-    }
-
-    public function setSupport(?string $SUPPORT): self
-    {
-        $this->support = $SUPPORT;
+        $this->programme = $programme;
 
         return $this;
     }

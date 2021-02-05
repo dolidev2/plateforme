@@ -164,43 +164,28 @@ class ServiceController extends AbstractController
      */
     public function ajouter_dossier( $service, Request $request, SluggerInterface $slugger, ServiceRepository $serviceRepository, EntityManagerInterface $em)
     {
-
-        //Get all services
         $responseService = $serviceRepository->find($service);
         $dossier = new Dossier();
         $form = $this->createForm(DossierType::class,$dossier);
-
-        //Hydrate data
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() ){
-
-            //Save client if exist
             if(!empty($dossier->getClient()))
             {
                 $client = new Client();
-
                 $client->setNomClient($dossier->getClient());
                 $client->setCreatedAt(new \DateTimeImmutable());
                 $client->setUpdatedAt(new \DateTimeImmutable());
-
-                //Persist & save
                 $em->persist($client);
                 $em->flush();
             }
-
             $dossier->setNomDossier($form->get('nomDossier')->getData());
             $dossier->setType($form->get('type')->getData());
             $dossier->setClient($form->get('client')->getData());
             $dossier->setService($responseService);
-
-            //Set Statut
             $dossier->setStatut(0);
-            //Set Date
             $dossier->setCreatedAt(new \DateTimeImmutable());
             $dossier->setUpdatedAt(new \DateTimeImmutable());
-
-            //Persist & save
             $em->persist($dossier);
             $em->flush();
 
@@ -325,7 +310,6 @@ class ServiceController extends AbstractController
 
             if(!empty($nameFournisseur))
             {
-
                 //Add Devis
                 $devisFile = $formDev->get('nomDevis')->getData();
 

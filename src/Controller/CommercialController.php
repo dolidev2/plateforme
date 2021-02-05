@@ -86,7 +86,7 @@ class CommercialController extends AbstractController
             $dossier->setStatut(0);
             $dossier->setUser($user);
             $dossier->setType($type);
-            $dossier->setType($support);
+            $dossier->setSupport($support);
             $this->em->persist($dossier);
             $this->em->flush();
             return $this->redirectToRoute('app_service_commercial_consulter',['type'=>$type,'support'=>$support]);

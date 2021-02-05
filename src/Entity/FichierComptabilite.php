@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CommercialRepository;
+use App\Repository\FichierComptabiliteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CommercialRepository::class)
+ * @ORM\Entity(repositoryClass=FichierComptabiliteRepository::class)
  */
-class Commercial
+class FichierComptabilite
 {
     /**
      * @ORM\Id
@@ -23,21 +23,6 @@ class Commercial
     private $nom;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $type;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $statut;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
@@ -48,14 +33,14 @@ class Commercial
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commercials")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comptabilite")
      */
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Comptabilite::class, inversedBy="fichierComptabilite")
      */
-    private $support;
+    private $comptabilite;
 
 
     public function getId(): ?int
@@ -71,42 +56,6 @@ class Commercial
     public function setNom(?string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getStatut(): ?string
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(?string $statut): self
-    {
-        $this->statut = $statut;
 
         return $this;
     }
@@ -147,14 +96,14 @@ class Commercial
         return $this;
     }
 
-    public function getSupport(): ?string
+    public function getComptabilite(): ?Comptabilite
     {
-        return $this->support;
+        return $this->comptabilite;
     }
 
-    public function setSupport(?string $SUPPORT): self
+    public function setComptabilite(?Comptabilite $comptabilite): self
     {
-        $this->support = $SUPPORT;
+        $this->comptabilite = $comptabilite;
 
         return $this;
     }

@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ service.nomService }} | {{ dos }}{% endblock %}
+
+{% form_theme form _self  %}
+
+{% block content %}
+  {% include "marketing/menu.html.twig" %}
+  <div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ dos }}</h4>
+                {{ form_start(form) }}
+                    <caption> Période 
+                        <div class="row">
+                            <div class="form-group col-6">
+                                {{ form_row(form.dateDebut)}}
+                            </div> 
+                            <div class="form-group col-6">
+                            {{ form_row(form.dateFin)}}
+                            </div>
+                        </div>
+                    </caption>
+                    <caption> Tâche
+                        <div class="row">
+                            <div class="col-12">
+                                {{ form_row(form.tacheMarketings) }}
+                            </div>
+                        </div>
+                    </caption>
+                    <button type="submit" class="btn btn-primary mr-2">{{ dos }}</button>
+                    <button type="reset"  class="btn btn-light">Annuler</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+ </div>
+{% endblock %}
+{% block _programme_tacheMarketings_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _programme_tacheMarketings_widget %}
+
+    <p>Ici, ajoutez une tâche !</p>
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <button type="button" id="add-file" class="btn btn-primary">Ajouter une tâche</button>
+    </div>
+{% endblock %}
+
+{% block _programme_tacheMarketings_entry_widget %}
+    <div class="form-group" id="block_{{ id }}">
+        <div class="row">
+            <div class="col-10">
+                {{ form_widget(form) }}
+            </div> 
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger btn-rounded">X</button>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+    $(document).ready(function(){
+         $('#add-file').click(function () {
+            //Je recupere le numero des futurs champs que je vais creer
+            const index = $('#programme_tacheMarketings div.form-group').length ;
+            //Je recupere le prototype des entrees
+             const tmpl = $('#programme_tacheMarketings').data('prototype').replace(/__name__/g,index);
+           //J'injecte le code au sein de la div
+             $('#programme_tacheMarketings').append(tmpl);
+             //Je gere le button supprimer
+             supprimerButton();
+ 
+         });
+
+         function supprimerButton () {
+             $('button[data-action="delete"]').click(function () {
+                 const target = this.dataset.target;
+                 $(target).remove();
+
+             });
+         }
+         supprimerButton();
+    })
+
+    </script>
+
+{% endblock %}
+
+
+
