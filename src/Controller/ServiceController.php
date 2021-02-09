@@ -25,10 +25,6 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mercure\Publisher;
-use Symfony\Component\Mercure\PublisherInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 /**
@@ -60,28 +56,13 @@ class ServiceController extends AbstractController
         $this->dossierService = $dossierService;
         $this->em = $em;
     }
-
-    public function __invoke(PublisherInterface $publisher) : Response
-    {
-        $update = new Update(
-            'http://plateforme.com/users/comment',
-            json_encode(['status' => 'OutOfStock'])
-        );
-
-        // The Publisher service is an invokable object
-        $publisher($update);
-
-        return new Response('published!');
-        
-    }
-
+  
     /**
      * @Route("/accueil", name="home")
      */
     public function index(ServiceRepository $serviceRepository,DossierRepository $dossierRepository)
     {
         $dossier = $this->dossierService->bilanDossier();
-
         return $this->render('home/index.html.twig', [
             'dossier' => $dossier,
         ]);
@@ -93,15 +74,12 @@ class ServiceController extends AbstractController
      */
     public function service(Service $id, ServiceRepository $serviceRepository, DossierRepository $dossierRepository)
     {
-
         $dossierService = $dossierRepository->findDossierService($id->getId());
-
         return $this->render('service/service.html.twig',[
             'dossier' =>$dossierService,
             'service' => $id,
         ]);
     }
-
 
     /**
      * @Route("/{service}/{dossier}/Details", name="service_dossier" )

@@ -1,6 +1,7 @@
-    <div style="margin-left:38%;" >
+    <div style="margin-left:32%;" >
         <div class="mr-1 mb-1 mt-1" >
             <a href="{{ path('app_service_add_dossier',{service:service.id}) }}"><button type="button" class="btn btn-success btn-rounded btn-fw">Ajouter</button></a>
-            <a href="{{ path('app_service_cloturer_dossier',{service:service.id}) }}"><button type="button" class="btn btn-warning btn-rounded btn-fw">Clôturer</button></a>
+            <a href="{{ path('app_service',{id:service.id}) }}"><button type="button" class="btn btn-warning btn-rounded btn-fw">Consulter</button></a>
+            <a href="{{ path('app_service_cloturer_dossier',{service:service.id}) }}"><button type="button" class="btn btn-info btn-rounded btn-fw">Clôturer</button></a>
         </div>
    </div>

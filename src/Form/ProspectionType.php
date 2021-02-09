@@ -2,34 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Dossier;
+use App\Entity\Prospection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DossierType extends AbstractType
+class ProspectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomDossier', TextType::class,[
+            ->add('nom', TextType::class,[
                 'attr'=>[
                     'placeholder'=>'Nom du dossier',
                 ],
                 'required'=>true
             ])
-            ->add('type',ChoiceType::class,[
-                'choices'=>[
-                    'Interne' => 'Interne',
-                    'Externe' => 'Externe'
-                ]
-            ]) 
-            ->add('descript',TextAreaType::class,[
+            ->add('description',TextareaType::class,[
                 'label' =>"Description du dossier",
                 'attr'=>[
                     'class'=>'form-control'
@@ -41,12 +33,11 @@ class DossierType extends AbstractType
                 'choices'=>[
                     'En cours' => '0',
                     'Terminé' => '1'
-                ],
-                'required'=>true
+                ]
             ])
-            ->add('client',TextType::class,[
+            ->add('client', TextType::class,[
                 'attr'=>[
-                    'placeholder'=>"Nom du client si externe"
+                    'placeholder'=>'Nom du client',
                 ],
                 'required'=>false
             ])
@@ -56,7 +47,7 @@ class DossierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Dossier::class,
+            'data_class' => Prospection::class,
         ]);
     }
 }

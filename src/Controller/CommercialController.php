@@ -50,7 +50,6 @@ class CommercialController extends AbstractController
         ]);
     }
 
-
      /**
      * @Route("/cloturer/{type}/{support}", name="commercial_cloturer")
      */

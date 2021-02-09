@@ -1,0 +1,4 @@
+{% if app.user.id == dos.user.id %}
+    <a  href="{{ path('app_service_commercial_prospection_modifier',{prospection:dos.id}) }}"><label class="badge badge-warning mr-1"><i class="fa fa-edit"  data-toggle="tooltip" data-placement="top" title="Modifier"></i></label></a> 
+    <a  href="{{ path('app_service_commercial_prospection_supprimer',{prospection:dos.id})}}"><label class="badge badge-danger"><i class="fa fa-trash-o "  data-toggle="tooltip" data-placement="top" title="Supprimer"></i></label></a>
+{% endif %}

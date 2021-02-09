@@ -45,12 +45,8 @@
                     <i class="menu-arrow"></i></a>
                 <div class="submenu">
                     <ul class="submenu-item">
-                        {% if app.session.get('dossier')[3]['dossier_1'] is defined  %}
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[3]['id']}) }}">{{ app.session.get('dossier')[3]['dossier_1'] }}</a></li>
-                        {% endif %}
-                        {% if app.session.get('dossier')[3]['dossier_2'] is defined %}
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id:app.session.get('dossier')[3]['id']}) }}">{{ app.session.get('dossier')[3]['dossier_2'] }}</a></li>
-                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_service',{id: 4}) }}">En cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_service_commercial_prospection_consulter') }}">Prospection</a></li>
                     </ul>
                 </div>
             </li>

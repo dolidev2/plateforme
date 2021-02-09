@@ -102,6 +102,11 @@ class User implements UserInterface
      */
     private $tacheMarketings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Prospection::class, mappedBy="user")
+     */
+    private $prospections;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -112,6 +117,7 @@ class User implements UserInterface
         $this->comptabilites = new ArrayCollection();
         $this->programmeMarketings = new ArrayCollection();
         $this->tacheMarketings = new ArrayCollection();
+        $this->prospections = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -464,6 +470,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($tacheMarketing->getUser() === $this) {
                 $tacheMarketing->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Prospection[]
+     */
+    public function getProspections(): Collection
+    {
+        return $this->prospections;
+    }
+
+    public function addProspection(Prospection $prospection): self
+    {
+        if (!$this->prospections->contains($prospection)) {
+            $this->prospections[] = $prospection;
+            $prospection->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProspection(Prospection $prospection): self
+    {
+        if ($this->prospections->removeElement($prospection)) {
+            // set the owning side to null (unless already changed)
+            if ($prospection->getUser() === $this) {
+                $prospection->setUser(null);
             }
         }
 

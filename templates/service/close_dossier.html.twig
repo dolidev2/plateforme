@@ -6,23 +6,7 @@
     <div style="margin-left: 40%;">
         <button type="button" class="btn btn-primary btn-rounded btn-fw">{{ service.nomService| upper }}</button>
     </div>
-    <div class="row" style="margin-left: 30%; margin-top: 10px; margin-bottom: 10px;">
-
-        <div class="col-md-3 col-lg-4 col-sm-4">
-            <a href="{{ path('app_service_add_dossier',{service:service.id}) }}"><button type="button" class="btn btn-success btn-rounded btn-fw">Ajouter</button></a>
-        </div>
-
-        <div class="col-md-3 col-lg-4 col-sm-4">
-            <a href="{{ path('app_service',{id:service.id}) }}"><button type="button" class="btn btn-warning btn-rounded btn-fw">Dossier</button></a>
-        </div>
-
-        <div class="col-md-3 col-lg-4 col-sm-4">
-            <a href="{{ path('app_service_historique_dossier',{service:service.id}) }}"><button type="button" class="btn btn-info btn-rounded btn-fw">Historique</button></a>
-        </div>
-
-    </div>
-    <br>
-    <br>
+    {% include "service/menu.html.twig" %}
     <div class="col-lg-12 col-md-12 col-xs-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
